@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "412914733828",
+    "project_id": "ubeemini-2ab03",
+    "storage_bucket": "ubeemini-2ab03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412914733828:android:4e1faabd9adbb57c673651",
+        "android_client_info": {
+          "package_name": "com.example.ubee_mini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB8k_YhxdVPourpMsCKhKsTejNOxLE0Oc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
