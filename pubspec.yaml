@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^2.23.0
   firebase_storage: ^11.5.2
   intl: any
+  get_it: ^7.6.4
 
 dev_dependencies:
   flutter_test:
