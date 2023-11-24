@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
 
 import 'injection_container.dart' as di;
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('fr', ''),
       ],
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const CreateAccountView("Create an account"),
     );
   }
 }
