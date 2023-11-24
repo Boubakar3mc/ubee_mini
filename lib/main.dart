@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+import 'injection_container.dart' as di;
+
+Future<void> main() async {
+  await di.init();
   runApp(const MyApp());
 }
 

@@ -7,7 +7,7 @@ void main(){
     String password2 = "1922141";
 
     PasswordMatchCheck passwordMatchCheck = PasswordMatchCheck();
-    bool match = passwordMatchCheck.call(PasswordMathcCheckParams(password1, password2));
+    bool match = await passwordMatchCheck.call(PasswordMathcCheckParams(password1, password2));
 
     expect(match,false);
   });
@@ -17,7 +17,7 @@ void main(){
     String password2 = "1942149";
 
     PasswordMatchCheck passwordMatchCheck = PasswordMatchCheck();
-    bool match = passwordMatchCheck.call(PasswordMathcCheckParams(password1, password2));
+    bool match = await passwordMatchCheck.call(PasswordMathcCheckParams(password1, password2));
 
     expect(match,true);
   });

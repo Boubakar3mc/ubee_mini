@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:ubee_mini/core/use_cases.dart';
+import 'package:ubee_mini/core/utils/usecase.dart';
 
-class PasswordMatchCheck extends UseCases<bool,PasswordMathcCheckParams>{
+
+class PasswordMatchCheck extends UseCase<bool,PasswordMathcCheckParams>{
   @override
-  bool call(PasswordMathcCheckParams params) {
-    return params.password == params.passwordConfirm;
+  Future<bool> call(PasswordMathcCheckParams params) {
+    return Future.value(params.password == params.passwordConfirm);
   }
 
 }

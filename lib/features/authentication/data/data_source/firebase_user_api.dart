@@ -2,48 +2,48 @@ import 'package:ubee_mini/features/authentication/data/data_source/user_api.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
 
-class FireBaseUserApi implements UserApi{
-  late UserCredential? userCredential;
+class FireBaseUserApi implements UserApi {
+  late Future<UserCredential> userCredential;
   @override
-  CreateUserResponse createUser(String email, String password){
+  Future<CreateUserResponse> createUser(String email, String password) {
     try {
-      userCredential = FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      userCredential = FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      
+      CreateUserResponse createUserResponse =
+          CreateUserResponse(true, responseError: CreateUserResponseError.none);
 
-     
-    }
-    on FirebaseAuthException catch (e){
+      return Future.value(createUserResponse);
+
+    } on FirebaseAuthException catch (e) {
       late CreateUserResponse createUserResponse;
       switch (e.code) {
         case "email-already-in-use":
-          createUserResponse = CreateUserResponse(false,responseError:CreateUserResponseError.emailAlreadyInUse);
+          createUserResponse = CreateUserResponse(false,
+              responseError: CreateUserResponseError.emailAlreadyInUse);
           break;
         case "invalid-email":
-          createUserResponse = CreateUserResponse(false,responseError:CreateUserResponseError.invalidEmail);
+          createUserResponse = CreateUserResponse(false,
+              responseError: CreateUserResponseError.invalidEmail);
           break;
         case "operation-not-allowed":
-          createUserResponse = CreateUserResponse(false,responseError:CreateUserResponseError.operationNotAllowed);
+          createUserResponse = CreateUserResponse(false,
+              responseError: CreateUserResponseError.operationNotAllowed);
           break;
         case "weak-password":
-          createUserResponse = CreateUserResponse(false,responseError:CreateUserResponseError.weakPassword);
+          createUserResponse = CreateUserResponse(false,
+              responseError: CreateUserResponseError.weakPassword);
           break;
         default:
-          createUserResponse = CreateUserResponse(false,responseError:CreateUserResponseError.none);
+          createUserResponse = CreateUserResponse(false,
+              responseError: CreateUserResponseError.none);
           break;
       }
-      return createUserResponse;
+      return Future.value(createUserResponse);
+    } catch (e) {
+      return Future.value(CreateUserResponse(false,
+          responseError: CreateUserResponseError.none));
     }
-    catch (e) {
-      return CreateUserResponse(false,responseError:CreateUserResponseError.none);
-    }
-     
   }
-   
 
-  @override
-  UserCredential? getUserCredential() {
-    return userCredential;
-  }
-  
 }

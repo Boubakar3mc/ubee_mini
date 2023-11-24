@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:ubee_mini/core/use_cases.dart';
+import 'package:ubee_mini/core/utils/usecase.dart';
 
-class PasswordValidation extends UseCases<bool,PasswordValidationParams>{
+class PasswordValidation extends UseCase<bool,PasswordValidationParams>{
   @override
-  bool call(PasswordValidationParams params) {
+  Future<bool> call(PasswordValidationParams params) {
 
     //J'ai choisis les règles suivante pour la validation du mot de passe:
       // - Au moins une lettre majuscule
@@ -14,15 +14,15 @@ class PasswordValidation extends UseCases<bool,PasswordValidationParams>{
     RegExp validationRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~%]).{8,}$'); 
 
     RegExpMatch? match = validationRegex.firstMatch(params.password);
-    if(match!=null) return true;
+    if(match!=null) return Future.value(true);
 
-    return false;
+    return Future.value(false);
   }
 
 }
 
 class PasswordValidationParams extends Equatable{
-  final password;
+  final String password;
 
   const PasswordValidationParams(this.password);
 

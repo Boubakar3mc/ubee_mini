@@ -6,19 +6,19 @@ void main(){
     PasswordValidation passwordValidation = PasswordValidation();
     
     String password = "123456789";
-    bool passwordPass = passwordValidation.call(PasswordValidationParams(password));
+    bool passwordPass = await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,false);
 
     password = "********";
-    passwordPass = passwordValidation.call(PasswordValidationParams(password));
+    passwordPass = await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,false);
     
     password = "1Aa?"; //Bon caractères mais pas assez long
-    passwordPass = passwordValidation.call(PasswordValidationParams(password));
+    passwordPass =  await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,false);
 
     password = "1ea&3904"; //Bon caractères mais manque lettre majuscule
-    passwordPass = passwordValidation.call(PasswordValidationParams(password));
+    passwordPass =  await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,false);
     
   });
@@ -27,7 +27,7 @@ void main(){
     PasswordValidation passwordValidation = PasswordValidation();
     
     String password = "Fav%5r32";
-    bool passwordPass = passwordValidation.call(PasswordValidationParams(password));
+    bool passwordPass =  await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,true);
   });
 }
