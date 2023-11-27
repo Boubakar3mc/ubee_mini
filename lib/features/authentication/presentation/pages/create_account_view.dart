@@ -20,6 +20,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       TextEditingController();
 
   Timer? _passwordValidationTypingTimer;
+  Timer? _passwordMatchingTypingTimer;
+  final passwordCheckTime = 600;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -66,20 +69,26 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               const Text('The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',
                               style:TextStyle(color: Colors.red))
                               :Container(),
-                              
-                              (state is AuthenticationValidPassword)?Container():Container(),
+                            
                             ],
                           ),
-                          SizedBox(
-                            width: 250,
-                            child: TextField(
-                              controller: passwordConfirmTextFieldController,
-                              decoration: const InputDecoration(
-                                labelText: "Confirm password",
-                                hintText: 'Confirm password',
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: 250,
+                                child: TextField(
+                                  controller: passwordConfirmTextFieldController,
+                                  decoration: const InputDecoration(
+                                    labelText: "Confirm password",
+                                    hintText: 'Confirm password',
+                                  ),
+                                  onChanged:(text) {passwordMatchingResetTimer(context);},
+                                  obscureText: true,
+                                ),
                               ),
-                              obscureText: true,
-                            ),
+                              (state is AuthenticationNotMatchingPassword)?
+                              const Text("Password doesn't match",style: TextStyle(color: Colors.red),):Container(),
+                            ],
                           ),
                           const Expanded(child: SizedBox()),
                           ElevatedButton(
@@ -97,8 +106,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     );
   }
 
+
+
   startPasswordValidationTimer(BuildContext context){
-    _passwordValidationTypingTimer = Timer(const Duration(milliseconds: 600),(){
+    _passwordValidationTypingTimer = Timer(Duration(milliseconds: passwordCheckTime),(){
       context.read<AuthenticationBloc>().add(PasswordTypingStopped(passwordTextFieldController.text));
     });
   }
@@ -106,5 +117,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   passwordValidationResetTimer(BuildContext context){
     _passwordValidationTypingTimer?.cancel();
     startPasswordValidationTimer(context);
+  }
+
+  startPasswordMatchingTimer(BuildContext context){
+    _passwordMatchingTypingTimer = Timer(Duration(milliseconds: passwordCheckTime),(){
+      context.read<AuthenticationBloc>().add(PasswordConfirmationTypingStopped(passwordTextFieldController.text, passwordConfirmTextFieldController.text));
+    });
+  }
+
+  passwordMatchingResetTimer(BuildContext context){
+    _passwordMatchingTypingTimer?.cancel();
+    startPasswordMatchingTimer(context);
   }
 }

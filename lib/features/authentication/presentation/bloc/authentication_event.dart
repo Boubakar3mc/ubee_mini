@@ -12,3 +12,10 @@ final class PasswordTypingStopped extends AuthenticationEvent {
 
   const PasswordTypingStopped(this.password);
 }
+
+final class PasswordConfirmationTypingStopped extends AuthenticationEvent{
+  final String password;
+  final String confirmationPassword;
+
+  const PasswordConfirmationTypingStopped(this.password,this.confirmationPassword);
+}
