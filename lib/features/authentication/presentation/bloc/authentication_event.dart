@@ -6,3 +6,9 @@ abstract class AuthenticationEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class PasswordTypingStopped extends AuthenticationEvent {
+  final String password;
+
+  const PasswordTypingStopped(this.password);
+}

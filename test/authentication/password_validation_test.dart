@@ -29,5 +29,10 @@ void main(){
     String password = "Fav%5r32";
     bool passwordPass =  await passwordValidation.call(PasswordValidationParams(password));
     expect(passwordPass,true);
+
+    password = "Charlie18#";
+    passwordPass =  await passwordValidation.call(PasswordValidationParams(password));
+    expect(passwordPass,true);
+
   });
 }

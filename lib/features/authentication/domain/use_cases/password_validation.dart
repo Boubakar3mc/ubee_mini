@@ -10,6 +10,7 @@ class PasswordValidation extends UseCase<bool,PasswordValidationParams>{
       // - Au moins une lettre minuscule
       // - Au moins un chiffre
       // - Au moins un caractère spéciaux (!@#\$&*~%)
+      // - Au moin 8 caractères
 
     RegExp validationRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~%]).{8,}$'); 
 
