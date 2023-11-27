@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ubee_mini/features/authentication/domain/use_cases/email_validation.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/password_match_check.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/password_validation.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
@@ -12,8 +13,15 @@ class AuthenticationBloc
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) {});
 
+    on<EmailTypingStopped>(_validEmailCheck);
     on<PasswordTypingStopped>(_validPasswordCheck);
     on<PasswordConfirmationTypingStopped>(_matchPasswordCheck);
+  }
+
+  void _validEmailCheck(EmailTypingStopped event, Emitter<AuthenticationState> emit) async{
+    bool isValidEmail = await injection.sl<EmailValidation>().call(EmailValidationParams(event.email));
+
+    isValidEmail?emit(AuthenticationInitial()):emit(AuthenticationInvalidEmail());
   }
 
   void _validPasswordCheck(PasswordTypingStopped event, Emitter<AuthenticationState> emit) async{

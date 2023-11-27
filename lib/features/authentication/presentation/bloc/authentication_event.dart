@@ -7,6 +7,12 @@ abstract class AuthenticationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class EmailTypingStopped extends AuthenticationEvent{
+  final String email;
+
+  const EmailTypingStopped(this.email);
+}
+
 final class PasswordTypingStopped extends AuthenticationEvent {
   final String password;
 
@@ -18,4 +24,13 @@ final class PasswordConfirmationTypingStopped extends AuthenticationEvent{
   final String confirmationPassword;
 
   const PasswordConfirmationTypingStopped(this.password,this.confirmationPassword);
+}
+
+
+
+final class CreateAccountClicked extends AuthenticationEvent{
+  final String email;
+  final String password;
+
+  const CreateAccountClicked(this.email,this.password);
 }
