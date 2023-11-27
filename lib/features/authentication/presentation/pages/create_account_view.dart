@@ -109,7 +109,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     const Expanded(child: SizedBox()),
                     ElevatedButton(
-                      onPressed: () {},
+                      
+                      onPressed: (state is AuthenticationInitial)&&allFieldFilled()?(){}:null,
                       child: const Text('Create account'),
                     ),
                     const SizedBox(
@@ -163,5 +164,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   passwordMatchingResetTimer(BuildContext context) {
     _passwordMatchingTypingTimer?.cancel();
     startPasswordMatchingTimer(context);
+  }
+
+  bool allFieldFilled(){
+    if(emailTextFieldController.text != "" && passwordTextFieldController.text != "" && passwordConfirmTextFieldController.text !="") return true;
+
+    return false;
   }
 }
