@@ -6,3 +6,4 @@ const textfieldCheckTime = 600;
 
 const Color themeBlueColor = Color.fromARGB(255, 33, 114, 139);
 const Color themeLightColor = Colors.white;
+const Color themeDisabledButtonColor = Color.fromARGB(255, 217, 217, 217);

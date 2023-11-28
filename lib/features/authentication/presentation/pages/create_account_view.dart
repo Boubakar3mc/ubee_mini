@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/errorMessage.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/inputTextField.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 import 'dart:async';
@@ -55,114 +56,83 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               ),
               Column(
                 children: [
-                  SizedBox(
-                    width: 250,
-                    child: InputTextField(
-                      'Enter your email address',
-                      controller: emailTextFieldController,
-                      hintText: 'Email',
-                      onChanged: () {
-                        emailValidationResetTimer(context);
-                      },
-                    ),
+                  InputTextField(
+                    'Enter your email address',
+                    controller: emailTextFieldController,
+                    hintText: 'Email',
+                    onChanged: () {
+                      emailValidationResetTimer(context);
+                    },
                   ),
-                  (state is AuthenticationInvalidEmail)
-                      ? const Text(
-                          'Invalid email adress',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container(),
-                  (state is AuthenticationEmailAlreadyInUse)
-                      ? const Text(
-                          'Email already in use',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container(),
+                  ErrorMessage('Invalid email adress', condition: state is AuthenticationInvalidEmail ),
+                  ErrorMessage('Email already in use', condition: state is AuthenticationEmailAlreadyInUse),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(
-                      width: 250,
-                      child: InputTextField(
-                        'Create a password',
-                        controller: passwordTextFieldController,
-                        onChanged: () {
-                          passwordValidationResetTimer(context);
-                        },
-                        hintText: 'Password',
-                        obscureText: true,
-                      )),
-                  (state is AuthenticationInvalidPassword)
-                      ? const Text(
-                          'The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',
-                          style: TextStyle(color: Colors.red))
-                      : Container(),
-                  (state is AuthenticationWeakPassword)
-                      ? const Text(
-                          'Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container(),
+                  InputTextField(
+                    'Create a password',
+                    controller: passwordTextFieldController,
+                    onChanged: () {
+                      passwordValidationResetTimer(context);
+                    },
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+                  ErrorMessage("The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)", condition: state is AuthenticationInvalidPassword),
+                  ErrorMessage('Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',condition:state is AuthenticationWeakPassword),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(
-                      width: 250,
-                      child: InputTextField(
-                        'Confirm password',
-                        controller: passwordConfirmTextFieldController,
-                        hintText: 'Confirm password',
-                        onChanged: (){passwordMatchingResetTimer(context);},
-                        obscureText: true,
-                      )),
-                  (state is AuthenticationNotMatchingPassword)
-                      ? const Text(
-                          "Password doesn't match",
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container(),
+                  InputTextField(
+                    'Confirm password',
+                    controller: passwordConfirmTextFieldController,
+                    hintText: 'Confirm password',
+                    onChanged: () {
+                      passwordMatchingResetTimer(context);
+                    },
+                    obscureText: true,
+                  ),
+                  ErrorMessage("Password doesn't match", condition: state is AuthenticationNotMatchingPassword)
                 ],
               ),
               const Expanded(child: SizedBox()),
-              ElevatedButton(
-                onPressed: (state is AuthenticationInitial) && allFieldFilled()
-                    ? () {
-                        context.read<AuthenticationBloc>().add(
-                            CreateAccountClicked(emailTextFieldController.text,
-                                passwordTextFieldController.text));
-                      }
-                    : null,
-                style: const ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<Color>(themeBlueColor)),
-                child: const Text(
-                  'Create account',
-                  style: TextStyle(color: themeLightColor),
+              SizedBox(
+                width: 400,
+                child: ElevatedButton(
+                  onPressed:
+                      (state is! AuthenticationErrorState) && allFieldFilled()
+                          ? () {
+                              context.read<AuthenticationBloc>().add(
+                                  CreateAccountClicked(
+                                      emailTextFieldController.text,
+                                      passwordTextFieldController.text));
+                            }
+                          : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: themeBlueColor,
+                    disabledBackgroundColor: themeDisabledButtonColor,
+                  ),
+                  child: const Text(
+                    'Create account',
+                    style: TextStyle(color: themeLightColor),
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 100,
+                height: 50,
               ),
-              (state is AuthenticationUnattendedError)
-                  ? const Text('UnattendedError',
-                      style: TextStyle(color: Colors.red))
-                  : Container(),
-              (state is AuthenticationOperationNotAllowed)
-                  ? const Text('OperationNotAllowed',
-                      style: TextStyle(color: Colors.red))
-                  : Container(),
-              (state is AuthenticationUserSuccessfullyCreated)
-                  ? const Text('Authentication successfull',
-                      style: TextStyle(color: Colors.red))
-                  : Container(),
+              ErrorMessage('Unattended error', condition: state is AuthenticationUnattendedError),
+              ErrorMessage('Operation not allowed', condition: state is AuthenticationOperationNotAllowed),
+              ErrorMessage('Authentication successfull', condition: state is AuthenticationUserSuccessfullyCreated),
             ],
           );
         },
       )),
     );
   }
+
 
   startEmailValidationTimer(BuildContext context) {
     _emailValidationTypingTimer =

@@ -7,6 +7,7 @@ abstract class AuthenticationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+
 final class EmailTypingStopped extends AuthenticationEvent{
   final String email;
 

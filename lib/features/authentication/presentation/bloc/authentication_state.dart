@@ -10,19 +10,21 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthenticationInvalidEmail extends AuthenticationState{}
 
-class AuthenticationInvalidPassword extends AuthenticationState {}
+abstract class AuthenticationErrorState extends AuthenticationState{}
+ 
+class AuthenticationInvalidPassword extends AuthenticationErrorState {}
 
-class AuthenticationNotMatchingPassword extends AuthenticationState{}
+class AuthenticationNotMatchingPassword extends AuthenticationErrorState{}
 
-class AuthenticationUnattendedError extends AuthenticationState{
+class AuthenticationUnattendedError extends AuthenticationErrorState{
   
 }
 
-class AuthenticationEmailAlreadyInUse extends AuthenticationState{}
+class AuthenticationEmailAlreadyInUse extends AuthenticationErrorState{}
 
-class AuthenticationWeakPassword extends AuthenticationState{}
+class AuthenticationWeakPassword extends AuthenticationErrorState{}
 
-class AuthenticationOperationNotAllowed extends AuthenticationState{}
+class AuthenticationOperationNotAllowed extends AuthenticationErrorState{}
 
 class AuthenticationUserSuccessfullyCreated extends AuthenticationState{}
 

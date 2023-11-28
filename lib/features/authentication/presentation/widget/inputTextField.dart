@@ -23,24 +23,27 @@ class InputTextField extends StatefulWidget {
 class _InputTextFieldState extends State<InputTextField> {
   @override
   Widget build(context) {
-    return TextField(
-      controller: widget.controller,
-      decoration: InputDecoration(
-        label: Text(
-          widget.labelText,
-          style: const TextStyle(
-              color: themeBlueColor,
-              fontSize: 16,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w600,
-              height: 1.5),
+    return SizedBox(
+      width: 250,
+      child: TextField(
+        controller: widget.controller,
+        decoration: InputDecoration(
+          label: Text(
+            widget.labelText,
+            style: const TextStyle(
+                color: themeBlueColor,
+                fontSize: 16,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w600,
+                height: 1.5),
+          ),
+          hintText: widget.hintText,
         ),
-        hintText: widget.hintText,
+        obscureText: widget.obscureText,
+        onChanged: (text) {
+          widget.onChanged.call();
+        },
       ),
-      obscureText: widget.obscureText,
-      onChanged: (text) {
-        widget.onChanged.call();
-      },
     );
   }
 }
