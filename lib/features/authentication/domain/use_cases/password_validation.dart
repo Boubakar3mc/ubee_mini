@@ -6,10 +6,6 @@ class PasswordValidation extends UseCase<bool,PasswordValidationParams>{
   @override
   Future<bool> call(PasswordValidationParams params) {
 
-
-
-    
-
     RegExpMatch? match = passwordValidationRegex.firstMatch(params.password);
     if(match!=null) return Future.value(true);
 
