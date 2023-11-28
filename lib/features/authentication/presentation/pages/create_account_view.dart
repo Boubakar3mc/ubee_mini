@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 import 'dart:async';
@@ -22,7 +23,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   Timer? _emailValidationTypingTimer;
   Timer? _passwordValidationTypingTimer;
   Timer? _passwordMatchingTypingTimer;
-  final textfieldCheckTime = 600;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           ),
                         ),
                         (state is AuthenticationInvalidEmail)?const Text('Invalid email adress',style: TextStyle(color: Colors.red),):Container(),
+                        (state is AuthenticationEmailAlreadyInUse)?const Text('Email already in use',style: TextStyle(color: Colors.red),):Container(),
                       ],
                     ),
                     Column(
@@ -81,6 +83,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                                 'The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',
                                 style: TextStyle(color: Colors.red))
                             : Container(),
+                        (state is AuthenticationWeakPassword)
+                        ?const Text('Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',style: TextStyle(color: Colors.red),):Container(),
                       ],
                     ),
                     Column(
@@ -110,12 +114,21 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     const Expanded(child: SizedBox()),
                     ElevatedButton(
                       
-                      onPressed: (state is AuthenticationInitial)&&allFieldFilled()?(){}:null,
+                      onPressed: (state is AuthenticationInitial)&&allFieldFilled()?(){
+                        context.read<AuthenticationBloc>().add(CreateAccountClicked(emailTextFieldController.text, passwordTextFieldController.text));
+                      }:null,
                       child: const Text('Create account'),
                     ),
                     const SizedBox(
                       height: 100,
-                    )
+                    ),
+                    
+                    (state is AuthenticationUnattendedError)? 
+                    const Text('UnattendedError',style:TextStyle(color: Colors.red)):Container(),
+                    (state is AuthenticationOperationNotAllowed)? 
+                    const Text('OperationNotAllowed',style:TextStyle(color: Colors.red)):Container(),
+                    (state is AuthenticationUserSuccessfullyCreated)?
+                     const Text('Authentication successfull',style:TextStyle(color: Colors.red)):Container(),
                   ],
                 ),
               );
@@ -126,7 +139,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   startEmailValidationTimer(BuildContext context) {
     _emailValidationTypingTimer =
-        Timer(Duration(milliseconds: textfieldCheckTime), () {
+        Timer(const Duration(milliseconds: textfieldCheckTime), () {
       context
           .read<AuthenticationBloc>()
           .add(EmailTypingStopped(emailTextFieldController.text));
@@ -140,7 +153,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   startPasswordValidationTimer(BuildContext context) {
     _passwordValidationTypingTimer =
-        Timer(Duration(milliseconds: textfieldCheckTime), () {
+        Timer(const Duration(milliseconds: textfieldCheckTime), () {
       context
           .read<AuthenticationBloc>()
           .add(PasswordTypingStopped(passwordTextFieldController.text));
@@ -154,7 +167,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   startPasswordMatchingTimer(BuildContext context) {
     _passwordMatchingTypingTimer =
-        Timer(Duration(milliseconds: textfieldCheckTime), () {
+        Timer(const Duration(milliseconds: textfieldCheckTime), () {
       context.read<AuthenticationBloc>().add(PasswordConfirmationTypingStopped(
           passwordTextFieldController.text,
           passwordConfirmTextFieldController.text));

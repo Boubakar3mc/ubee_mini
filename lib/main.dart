@@ -1,11 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
+import 'package:ubee_mini/firebase_options.dart';
 
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
   await di.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

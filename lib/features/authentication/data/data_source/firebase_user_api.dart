@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
 
 class FireBaseUserApi implements UserApi {
-  late Future<UserCredential> userCredential;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
-  Future<CreateUserResponse> createUser(String email, String password) {
+  Future<CreateUserResponse> createUser(String email, String password) async{
     try {
-      userCredential = FirebaseAuth.instance
+      await auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
       CreateUserResponse createUserResponse =
@@ -41,6 +41,7 @@ class FireBaseUserApi implements UserApi {
       }
       return Future.value(createUserResponse);
     } catch (e) {
+      print(e);
       return Future.value(CreateUserResponse(false,
           responseError: CreateUserResponseError.none));
     }
