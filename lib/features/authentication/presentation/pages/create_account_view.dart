@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/errorMessage.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/inputTextField.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
+import 'package:ubee_mini/core/route/route.dart' as route;
 import 'dart:async';
 
 class CreateAccountView extends StatefulWidget {
@@ -30,8 +31,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => injection.sl<AuthenticationBloc>(),
-      child:
-          Scaffold(body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      child: Scaffold(
+          body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationUserSuccessfullyCreated) {
+            Navigator.pushNamed(context, route.welcomePage);
+          }
+        },
         builder: (context, state) {
           return Column(
             children: [
@@ -64,8 +70,12 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       emailValidationResetTimer(context);
                     },
                   ),
-                  ErrorMessage('Invalid email adress', condition: state is AuthenticationInvalidEmail ),
-                  ErrorMessage('Email already in use', condition: state is AuthenticationEmailAlreadyInUse),
+                  if (state is AuthenticationInvalidEmail) ...{
+                    const RedErrorMessage('Invalid email adress'),
+                  },
+                  if (state is AuthenticationEmailAlreadyInUse) ...{
+                    const RedErrorMessage('Email already in use'),
+                  },
                 ],
               ),
               Column(
@@ -79,8 +89,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     hintText: 'Password',
                     obscureText: true,
                   ),
-                  ErrorMessage("The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)", condition: state is AuthenticationInvalidPassword),
-                  ErrorMessage('Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)',condition:state is AuthenticationWeakPassword),
+                  if (state is AuthenticationInvalidPassword) ...{
+                    const RedErrorMessage(
+                        "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)"),
+                  },
+                  if (state is AuthenticationWeakPassword) ...{
+                    const RedErrorMessage(
+                        "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)"),
+                  },
                 ],
               ),
               Column(
@@ -94,7 +110,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     },
                     obscureText: true,
                   ),
-                  ErrorMessage("Password doesn't match", condition: state is AuthenticationNotMatchingPassword)
+                  if (state is AuthenticationNotMatchingPassword) ...{
+                    const RedErrorMessage("Password doesn't match"),
+                  },
                 ],
               ),
               const Expanded(child: SizedBox()),
@@ -123,16 +141,18 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               const SizedBox(
                 height: 50,
               ),
-              ErrorMessage('Unattended error', condition: state is AuthenticationUnattendedError),
-              ErrorMessage('Operation not allowed', condition: state is AuthenticationOperationNotAllowed),
-              ErrorMessage('Authentication successfull', condition: state is AuthenticationUserSuccessfullyCreated),
+              if (state is AuthenticationUnattendedError) ...{
+                const RedErrorMessage('Unattended error'),
+              },
+              if (state is AuthenticationOperationNotAllowed) ...{
+                const RedErrorMessage('Operation not allowed'),
+              },
             ],
           );
         },
       )),
     );
   }
-
 
   startEmailValidationTimer(BuildContext context) {
     _emailValidationTypingTimer =
