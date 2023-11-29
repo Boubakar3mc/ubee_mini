@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
@@ -116,27 +117,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 ],
               ),
               const Expanded(child: SizedBox()),
-              SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  onPressed:
-                      (state is! AuthenticationErrorState) && allFieldFilled()
-                          ? () {
-                              context.read<AuthenticationBloc>().add(
-                                  CreateAccountClicked(
-                                      emailTextFieldController.text,
-                                      passwordTextFieldController.text));
-                            }
-                          : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeBlueColor,
-                    disabledBackgroundColor: themeDisabledButtonColor,
-                  ),
-                  child: const Text(
-                    'Create account',
-                    style: TextStyle(color: themeLightColor),
-                  ),
-                ),
+              DarkButton(
+                'Create account',
+                onPressed:
+                    (state is! AuthenticationErrorState) && allFieldFilled()
+                        ? () {
+                            context.read<AuthenticationBloc>().add(
+                                CreateAccountClicked(
+                                    emailTextFieldController.text,
+                                    passwordTextFieldController.text));
+                          }
+                        : null,
               ),
               const SizedBox(
                 height: 50,

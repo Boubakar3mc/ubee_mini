@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('fr', ''),
       ],
-      home: const WelcomeToUbeeView(),
-      //home: const CreateAccountView("Create an account"),
+      //home: const WelcomeToUbeeView(),
+      home: const CreateAccountView("Create an account"),
     );
   }
 }
