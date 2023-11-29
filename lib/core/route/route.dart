@@ -21,13 +21,3 @@ Route<dynamic> controller(RouteSettings settings) {
   }
 }
 
-class TestRouteView extends StatelessWidget {
-  final String test;
-
-  const TestRouteView({required this.test,super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
