@@ -33,7 +33,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     return BlocProvider(
       create: (context) => injection.sl<AuthenticationBloc>(),
       child: Scaffold(
-          appBar: simpleAppBar('Create an account', onArrowPressed: () {}),
+          appBar: SimpleAppBar('Create an account', onArrowPressed: () {}),
           body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is AuthenticationUserSuccessfullyCreated) {

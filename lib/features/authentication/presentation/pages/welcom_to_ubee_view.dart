@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/rectangular_button.dart';
+import 'package:ubee_mini/core/route/route.dart' as route;
 
 class WelcomeToUbeeView extends StatefulWidget {
   const WelcomeToUbeeView({super.key});
@@ -53,11 +54,15 @@ class _WelcomeToUbeeViewState extends State<WelcomeToUbeeView> {
             const SizedBox(
               height: 18,
             ),
-            RectangularButton('I need help', onPressed: (){}),
+            RectangularButton('I need help', onPressed: (){
+
+            }),
             const SizedBox(
               height: 14,
             ),
-            RectangularButton('I want to work', onPressed: (){}),
+            RectangularButton('I want to work', onPressed: (){
+              Navigator.pushNamed(context, route.setupProfile);
+            }),
           ],
         ),
       ),
