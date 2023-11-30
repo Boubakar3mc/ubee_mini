@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ubee_mini/core/components/page_title.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
+import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
@@ -10,9 +12,8 @@ import 'package:ubee_mini/core/route/route.dart' as route;
 import 'dart:async';
 
 class CreateAccountView extends StatefulWidget {
-  final String title;
 
-  const CreateAccountView(this.title, {super.key});
+  const CreateAccountView({super.key});
 
   @override
   State<CreateAccountView> createState() => _CreateAccountViewState();
@@ -45,22 +46,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               const SizedBox(
                 height: 58,
               ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon:
-                          const Icon(Icons.arrow_back, color: themeBlueColor)),
-                  const Text(
-                    'Create an account',
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2),
-                  ),
-                ],
-              ),
+              PageTitle('Create an account', onArrowPressed: (){}),
               Column(
                 children: [
                   InputTextField(

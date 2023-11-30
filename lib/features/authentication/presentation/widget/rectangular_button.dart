@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ubee_mini/core/utils/constants.dart';
+import 'package:ubee_mini/core/utils/colors_constants.dart';
 
 class RectangularButton extends StatelessWidget{
   final String text;

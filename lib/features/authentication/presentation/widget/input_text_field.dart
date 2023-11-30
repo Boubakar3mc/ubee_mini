@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ubee_mini/core/utils/constants.dart';
+import 'package:ubee_mini/core/utils/colors_constants.dart';
 
 class InputTextField extends StatefulWidget {
   final String labelText;
