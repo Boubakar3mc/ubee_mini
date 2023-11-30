@@ -4,8 +4,9 @@ import 'package:ubee_mini/core/utils/colors_constants.dart';
 class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int totalPart;
   final int currentPart;
+  final Function? onArrowPressed;
 
-  const ProgressAppBar({this.totalPart=5,this.currentPart=0,super.key});
+  const ProgressAppBar({this.totalPart=5,this.currentPart=0,this.onArrowPressed,super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(80);
@@ -19,7 +20,7 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         AppBar(
             leading: IconButton(
-                onPressed: () {},
+                onPressed: () {if(onArrowPressed!=null) onArrowPressed?.call();},
                 icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
             title: Row(
               children: getProgressBar(currentPart),
