@@ -8,18 +8,24 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProgressAppBar({this.totalPart=5,this.currentPart=0,super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(80);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-        leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
-        toolbarHeight: preferredSize.height,
-        title: Row(
-          children: getProgressBar(currentPart),
-        ));
+    return Column(
+      children: [
+        const SizedBox(
+          height: 20,
+        ),
+        AppBar(
+            leading: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
+            title: Row(
+              children: getProgressBar(currentPart),
+            )),
+      ],
+    );
   }
 
   List<Widget> getProgressBar(int current) {
