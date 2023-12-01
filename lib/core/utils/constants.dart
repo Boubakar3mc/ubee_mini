@@ -2,3 +2,4 @@
 final RegExp passwordValidationRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~%]).{8,}$');
 const textfieldCheckTime = 600;
 
+const int legalAge = 18;
