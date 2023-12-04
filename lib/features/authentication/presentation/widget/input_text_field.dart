@@ -9,6 +9,7 @@ class InputTextField extends StatefulWidget {
   final Function onChanged;
   final bool obscureText;
   final FocusNode?focusNode;
+  final String errorMessage;
 
   const InputTextField(this.labelText,
       {required this.controller,
@@ -16,6 +17,7 @@ class InputTextField extends StatefulWidget {
       this.hintText = "",
       this.obscureText = false,
       this.focusNode,
+      this.errorMessage="",
       super.key});
 
 
@@ -28,26 +30,40 @@ class _InputTextFieldState extends State<InputTextField> {
   Widget build(context) {
     return SizedBox(
       width: 250,
-      child: TextField(
-        focusNode: widget.focusNode,
-        controller: widget.controller,
-        decoration: InputDecoration(
-          label: Text(
-            widget.labelText,
-            style: const TextStyle(
-                color: themeBlueColor,
-                fontSize: 16,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w600,
-                height: 1.5),
+      child: Column(
+        children: [
+          TextField(
+            focusNode: widget.focusNode,
+            controller: widget.controller,
+            decoration: InputDecoration(
+              label: Text(
+                widget.labelText,
+                style: const TextStyle(
+                    color: themeBlueColor,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                    height: 1.5),
+              ),
+              hintText: widget.hintText,
+              focusedBorder: widget.errorMessage!=""?const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)):null,
+              suffixIcon: widget.errorMessage!=""?const Padding(
+                padding: EdgeInsets.only(top:30),
+                child: Icon(Icons.highlight_off,color:Colors.red),
+              ):null,
+            ),
+            obscureText: widget.obscureText,
+            onChanged: (text) {
+              widget.onChanged.call();
+            },
           ),
-          hintText: widget.hintText,
-        ),
-        obscureText: widget.obscureText,
-        onChanged: (text) {
-          widget.onChanged.call();
-        },
+          if(widget.errorMessage!="") _showError(),
+        ],
       ),
     );
+  }
+
+  Widget _showError(){
+    return Text("*${widget.errorMessage}",style: const TextStyle(color: Colors.red, fontSize: 14,fontWeight: FontWeight.w400));
   }
 }

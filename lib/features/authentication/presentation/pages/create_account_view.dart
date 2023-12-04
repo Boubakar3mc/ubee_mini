@@ -32,6 +32,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     return BlocProvider(
       create: (context) => injection.sl<AuthenticationBloc>(),
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: SimpleAppBar('Create an account', onArrowPressed: () {}),
           body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
@@ -55,13 +56,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           onChanged: () {
                             emailValidationResetTimer(context);
                           },
+                          errorMessage: _getEmailAdressErrorMessage(state),
                         ),
-                        if (state is AuthenticationInvalidEmail) ...{
-                          const RedErrorMessage('Invalid email adress'),
-                        },
-                        if (state is AuthenticationEmailAlreadyInUse) ...{
-                          const RedErrorMessage('Email already in use'),
-                        },
                       ],
                     ),
                     Column(
@@ -74,15 +70,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           },
                           hintText: 'Password',
                           obscureText: true,
+                          errorMessage: _getCreatePasswordErrorMessage(state),
                         ),
-                        if (state is AuthenticationInvalidPassword) ...{
-                          const RedErrorMessage(
-                              "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)"),
-                        },
-                        if (state is AuthenticationWeakPassword) ...{
-                          const RedErrorMessage(
-                              "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)"),
-                        },
                       ],
                     ),
                     Column(
@@ -95,24 +84,22 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                             passwordMatchingResetTimer(context);
                           },
                           obscureText: true,
+                          errorMessage: _getConfirmPasswordErrorMessage(state),
                         ),
-                        if (state is AuthenticationNotMatchingPassword) ...{
-                          const RedErrorMessage("Password doesn't match"),
-                        },
                       ],
                     ),
                     const Expanded(child: SizedBox()),
                     DarkButton(
                       'Create account',
-                      onPressed:
-                          (state is! AuthenticationErrorState) && allFieldFilled()
-                              ? () {
-                                  context.read<AuthenticationBloc>().add(
-                                      CreateAccountClicked(
-                                          emailTextFieldController.text,
-                                          passwordTextFieldController.text));
-                                }
-                              : null,
+                      onPressed: (state is! AuthenticationErrorState) &&
+                              allFieldFilled()
+                          ? () {
+                              context.read<AuthenticationBloc>().add(
+                                  CreateAccountClicked(
+                                      emailTextFieldController.text,
+                                      passwordTextFieldController.text));
+                            }
+                          : null,
                     ),
                     const SizedBox(
                       height: 50,
@@ -179,5 +166,30 @@ class _CreateAccountViewState extends State<CreateAccountView> {
         passwordConfirmTextFieldController.text != "") return true;
 
     return false;
+  }
+
+  String _getEmailAdressErrorMessage(AuthenticationState state) {
+    if (state is AuthenticationInvalidEmail) return 'Invalid email adress';
+    if (state is AuthenticationEmailAlreadyInUse) return 'Email already in use';
+    return "";
+  }
+
+  String _getCreatePasswordErrorMessage(AuthenticationState state) {
+    if (state is AuthenticationInvalidPassword) {
+      return "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)";
+    }
+    if (state is AuthenticationWeakPassword) {
+      return "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)";
+    }
+
+    return "";
+  }
+
+  String _getConfirmPasswordErrorMessage(AuthenticationState state) {
+    if (state is AuthenticationNotMatchingPassword) {
+      return "Password doesn't match";
+    }
+
+    return "";
   }
 }

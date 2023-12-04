@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: route.setupProfile,
+      initialRoute: route.authPage,
       onGenerateRoute: route.controller,
       title: 'Flutter Demo',
       theme: ThemeData(
