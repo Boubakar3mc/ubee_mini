@@ -8,16 +8,18 @@ class InputTextField extends StatefulWidget {
   final String hintText;
   final Function onChanged;
   final bool obscureText;
-  final FocusNode?focusNode;
   final String errorMessage;
+  final Function() ?onTap;
+  final bool readOnly;
 
   const InputTextField(this.labelText,
       {required this.controller,
       required this.onChanged,
       this.hintText = "",
       this.obscureText = false,
-      this.focusNode,
       this.errorMessage="",
+      this.onTap,
+      this.readOnly=false,
       super.key});
 
 
@@ -26,6 +28,15 @@ class InputTextField extends StatefulWidget {
 }
 
 class _InputTextFieldState extends State<InputTextField> {
+  String lastValue = "";
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      
+    });
+  }
+
   @override
   Widget build(context) {
     return SizedBox(
@@ -33,7 +44,8 @@ class _InputTextFieldState extends State<InputTextField> {
       child: Column(
         children: [
           TextField(
-            focusNode: widget.focusNode,
+            readOnly: widget.readOnly,
+            onTap: widget.onTap,
             controller: widget.controller,
             decoration: InputDecoration(
               label: Text(
@@ -62,7 +74,7 @@ class _InputTextFieldState extends State<InputTextField> {
       ),
     );
   }
-
+  
   Widget _showError(){
     return Text("*${widget.errorMessage}",style: const TextStyle(color: Colors.red, fontSize: 14,fontWeight: FontWeight.w400));
   }
