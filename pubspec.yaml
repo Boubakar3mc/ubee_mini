@@ -23,6 +23,7 @@ dependencies:
   get_it: ^7.6.4
   intl: any
   age_calculator: ^1.0.0
+  cloud_firestore: ^4.13.3
 
 dev_dependencies:
   flutter_test:

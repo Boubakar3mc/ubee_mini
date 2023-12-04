@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
+import 'package:ubee_mini/features/authentication/domain/use_cases/age_validation.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/create_user.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/email_validation.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/password_match_check.dart';
@@ -19,6 +20,8 @@ class AuthenticationBloc
     on<PasswordTypingStopped>(_validPasswordCheck);
     on<PasswordConfirmationTypingStopped>(_matchPasswordCheck);
     on<CreateAccountClicked>(_createAccount);
+    
+    on<BirthdateChanged>(_validAge);
   }
 
   void _validEmailCheck(EmailTypingStopped event, Emitter<AuthenticationState> emit) async{
@@ -67,6 +70,12 @@ class AuthenticationBloc
           emit(AuthenticationInitial());
       }
     }
+  }
+
+  void _validAge(BirthdateChanged event, Emitter<AuthenticationState> emit) async{
+    bool isValidBirthdate = await injection.sl<AgeValidation>().call(AgeValidationParams(event.birthDate));
+
+    isValidBirthdate?emit(AuthenticationInitial()):emit(AuthenticationInvalidAge());
   }
 
 }

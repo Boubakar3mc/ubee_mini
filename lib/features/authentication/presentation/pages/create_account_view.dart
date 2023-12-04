@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/simple_app_bar.dart';
-import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';

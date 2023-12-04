@@ -35,3 +35,9 @@ final class CreateAccountClicked extends AuthenticationEvent{
 
   const CreateAccountClicked(this.email,this.password);
 }
+
+final class BirthdateChanged extends AuthenticationEvent{
+  final DateTime birthDate;
+
+  const BirthdateChanged(this.birthDate);
+}

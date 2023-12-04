@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
 import 'package:ubee_mini/features/authentication/presentation/pages/setup_profile.dart';
 import 'package:ubee_mini/features/authentication/presentation/pages/welcom_to_ubee_view.dart';
-import 'package:ubee_mini/features/job/presentation/pages/home.dart';
 
 // Route Names
 

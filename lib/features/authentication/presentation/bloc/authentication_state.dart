@@ -28,3 +28,5 @@ class AuthenticationOperationNotAllowed extends AuthenticationErrorState{}
 
 class AuthenticationUserSuccessfullyCreated extends AuthenticationState{}
 
+class AuthenticationInvalidAge extends AuthenticationState{}
+
