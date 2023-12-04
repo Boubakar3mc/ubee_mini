@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
+import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
 
@@ -17,6 +19,16 @@ class _SetupProfileState extends State<SetupProfile> {
   TextEditingController birthDateController = TextEditingController();
 
   bool? conditionChecked = false;
+
+  final FocusNode _focus = FocusNode();
+  DateTime? birthDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +45,7 @@ class _SetupProfileState extends State<SetupProfile> {
                   fontWeight: FontWeight.w600),
             ),
             const Padding(
-              padding: EdgeInsets.only(top:15),
+              padding: EdgeInsets.only(top: 15),
               child: SizedBox(
                   width: 325,
                   child: Text(
@@ -46,48 +58,76 @@ class _SetupProfileState extends State<SetupProfile> {
                   )),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:25),
+              padding: const EdgeInsets.only(top: 25),
               child: InputTextField("What's your first name?",
                   controller: firstNameController, onChanged: () {}),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:10),
+              padding: const EdgeInsets.only(top: 10),
               child: InputTextField("What's your last name?",
                   controller: lastNameController, onChanged: () {}),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:10),
+              padding: const EdgeInsets.only(top: 10),
               child: InputTextField("What's your date of birth",
-                  controller: birthDateController, onChanged: () {}),
+                  focusNode: _focus,
+                  controller: birthDateController, onChanged: () {
+                context
+                    .read<AuthenticationBloc>()
+                    .add(BirthdateChanged(birthDate!));
+              }),
             ),
             Padding(
-              padding: EdgeInsets.only(top:100),
+              padding: EdgeInsets.only(top: 100),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Checkbox(
-                      value: conditionChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          conditionChecked = value;
-                        });
-                      },
-                      activeColor: const Color.fromARGB(255, 78, 145, 255),),
-                      Flexible(child: Container(
-                        width: 214,
-                        child: const Text('I understant that I will be acting as an individual contractor within the UBEE organization.',style: TextStyle(color: themeDarkColor,fontSize: 16,fontWeight: FontWeight.w400),))),
+                    value: conditionChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        conditionChecked = value;
+                      });
+                    },
+                    activeColor: const Color.fromARGB(255, 78, 145, 255),
+                  ),
+                  Flexible(
+                      child: Container(
+                          width: 214,
+                          child: const Text(
+                            'I understanc that I will be acting as an individual contractor within the UBEE organization.',
+                            style: TextStyle(
+                                color: themeDarkColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ))),
                 ],
               ),
             ),
-            const Expanded(child: SizedBox(),),
-            DarkButton('Continue', onPressed: (){}),
+            const Expanded(
+              child: SizedBox(),
+            ),
+            DarkButton('Continue', onPressed: () {}),
             const SizedBox(
-                      height: 50,
+              height: 50,
             ),
           ],
         ),
       ),
     );
+  }
+
+  _onFocusChange() async {
+    if (_focus.hasFocus) {
+      birthDate = await showDatePicker(
+          context: context,
+          firstDate: DateTime(1900),
+          lastDate: DateTime(DateTime.now().year));
+      birthDateController.text = birthDate != null
+          ? "${birthDate?.month.toString().padLeft(2, '0')} - ${birthDate?.day.toString().padLeft(2, '0')} - ${birthDate?.year}"
+          : "";
+      _focus.previousFocus();
+    }
   }
 }

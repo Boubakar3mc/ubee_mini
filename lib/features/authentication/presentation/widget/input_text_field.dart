@@ -8,13 +8,16 @@ class InputTextField extends StatefulWidget {
   final String hintText;
   final Function onChanged;
   final bool obscureText;
+  final FocusNode?focusNode;
 
   const InputTextField(this.labelText,
       {required this.controller,
       required this.onChanged,
       this.hintText = "",
       this.obscureText = false,
+      this.focusNode,
       super.key});
+
 
   @override
   State<InputTextField> createState() => _InputTextFieldState();
@@ -26,6 +29,7 @@ class _InputTextFieldState extends State<InputTextField> {
     return SizedBox(
       width: 250,
       child: TextField(
+        focusNode: widget.focusNode,
         controller: widget.controller,
         decoration: InputDecoration(
           label: Text(
