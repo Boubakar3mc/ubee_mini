@@ -99,7 +99,7 @@ class _SetupProfileState extends State<SetupProfile> {
                         onChanged: () {}),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 100),
+                    padding: const EdgeInsets.only(top: 100),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,10 +113,10 @@ class _SetupProfileState extends State<SetupProfile> {
                           },
                           activeColor: const Color.fromARGB(255, 78, 145, 255),
                         ),
-                        Flexible(
-                            child: Container(
+                        const Flexible(
+                            child:  SizedBox(
                                 width: 214,
-                                child: const Text(
+                                child: Text(
                                   'I understand that I will be acting as an individual contractor within the UBEE organization.',
                                   style: TextStyle(
                                       color: themeDarkColor,

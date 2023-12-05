@@ -43,7 +43,6 @@ class FireBaseUserApi implements UserApi {
       }
       return Future.value(createUserResponse);
     } catch (e) {
-      print(e);
       return Future.value(CreateUserResponse(false,
           responseError: CreateUserResponseError.none));
     }
@@ -61,8 +60,9 @@ class FireBaseUserApi implements UserApi {
         };
 
         final String? userEmail = FirebaseAuth.instance.currentUser?.email;
-        if(userEmail==null) return Future.value(UpdateNamesAndBirthdateResponse(false,responseError: UpdateNamesAndBirthdateRepsonseError.notLogedIn));
-
+        if(userEmail==null) {
+        return Future.value(UpdateNamesAndBirthdateResponse(false,responseError: UpdateNamesAndBirthdateRepsonseError.notLogedIn));
+        }
         
         FirebaseFirestore db = FirebaseFirestore.instance;
         db.collection('Users').doc(userEmail).set(userData,SetOptions(merge: true));
