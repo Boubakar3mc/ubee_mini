@@ -5,6 +5,7 @@ import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
 class SetupProfile extends StatefulWidget {
@@ -33,7 +34,9 @@ class _SetupProfileState extends State<SetupProfile> {
         appBar: const ProgressAppBar(),
         body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if(state is AuthenticationNamesBirthdateSucessfullyUpdated){
+              print('Profile updated');
+            }
           },
           builder: (context, state) {
             return Center(
@@ -72,22 +75,25 @@ class _SetupProfileState extends State<SetupProfile> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: InputTextField("What's your date of birth",
-                        readOnly: true,
-                        onTap:(){ showDatePicker(
-                                    context: context,
-                                    initialDate: birthDate ?? DateTime.now(),
-                                    firstDate: DateTime(1900),
-                                    lastDate: DateTime.now()).then((value) => {
-                                      
-                                      if(value!=null){
-                                        birthDate = value,
-                                      },
-                                      context.read<AuthenticationBloc>().add(BirthdateChanged(birthDate!)),
-                                      birthDateController.text = birthDate != null
-                                      ? "${birthDate?.month.toString().padLeft(2, '0')} - ${birthDate?.day.toString().padLeft(2, '0')} - ${birthDate?.year}"
-                                      : "",
-                                    });
-                                    },
+                        readOnly: true, onTap: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: birthDate ?? DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now())
+                          .then((value) => {
+                                if (value != null)
+                                  {
+                                    birthDate = value,
+                                  },
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(BirthdateChanged(birthDate!)),
+                                birthDateController.text = birthDate != null
+                                    ? "${birthDate?.month.toString().padLeft(2, '0')} - ${birthDate?.day.toString().padLeft(2, '0')} - ${birthDate?.year}"
+                                    : "",
+                              });
+                    },
                         errorMessage: _getBirthDateErrorMessage(state),
                         controller: birthDateController,
                         onChanged: () {}),
@@ -123,7 +129,16 @@ class _SetupProfileState extends State<SetupProfile> {
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  DarkButton('Continue', onPressed: () {}),
+                  if(state is AuthenticationNotLogedIn)...{
+                    const RedErrorMessage('Not loged in'),
+                  },
+                  DarkButton('Continue', onPressed: (state is! AuthenticationErrorState) &&
+                              _allFieldFilled()
+                          ? () {
+                              context.read<AuthenticationBloc>().add(
+                                  ContinueSetupProfileClicked(firstNameController.text, lastNameController.text, birthDate!));
+                            }
+                          : null,),
                   const SizedBox(
                     height: 50,
                   ),
@@ -141,5 +156,14 @@ class _SetupProfileState extends State<SetupProfile> {
       return "You must be of legal age to proceed.";
     }
     return "";
+  }
+
+  bool _allFieldFilled() {
+    if (firstNameController.text != "" &&
+        lastNameController.text != "" &&
+        birthDateController.text != "" &&
+        conditionChecked!) return true;
+
+    return false;
   }
 }

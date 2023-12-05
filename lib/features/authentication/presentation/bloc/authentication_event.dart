@@ -41,3 +41,11 @@ final class BirthdateChanged extends AuthenticationEvent{
 
   const BirthdateChanged(this.birthDate);
 }
+
+final class ContinueSetupProfileClicked extends AuthenticationEvent{
+  final String firstName;
+  final String lastName;
+  final DateTime birthDate;
+
+  const ContinueSetupProfileClicked(this.firstName,this.lastName,this.birthDate);
+}

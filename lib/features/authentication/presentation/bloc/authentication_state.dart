@@ -30,3 +30,7 @@ class AuthenticationUserSuccessfullyCreated extends AuthenticationState{}
 
 class AuthenticationInvalidAge extends AuthenticationErrorState{}
 
+class AuthenticationNamesBirthdateSucessfullyUpdated extends AuthenticationState{}
+
+class AuthenticationNotLogedIn extends AuthenticationErrorState{}
+
