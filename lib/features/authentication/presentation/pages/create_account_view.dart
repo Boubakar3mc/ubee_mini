@@ -41,77 +41,76 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               }
             },
             builder: (context, state) {
-              return Center(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 58,
-                    ),
-                    Column(
-                      children: [
-                        InputTextField(
-                          'Enter your email address',
-                          controller: emailTextFieldController,
-                          hintText: 'Email',
-                          onChanged: () {
-                            emailValidationResetTimer(context);
-                          },
-                          errorMessage: _getEmailAdressErrorMessage(state),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        InputTextField(
-                          'Create a password',
-                          controller: passwordTextFieldController,
-                          onChanged: () {
-                            passwordValidationResetTimer(context);
-                          },
-                          hintText: 'Password',
-                          obscureText: true,
-                          errorMessage: _getCreatePasswordErrorMessage(state),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        InputTextField(
-                          'Confirm password',
-                          controller: passwordConfirmTextFieldController,
-                          hintText: 'Confirm password',
-                          onChanged: () {
-                            passwordMatchingResetTimer(context);
-                          },
-                          obscureText: true,
-                          errorMessage: _getConfirmPasswordErrorMessage(state),
-                        ),
-                      ],
-                    ),
-                    const Expanded(child: SizedBox()),
-                    DarkButton(
-                      'Create account',
-                      onPressed: (state is! AuthenticationErrorState) &&
-                              allFieldFilled()
-                          ? () {
-                              context.read<AuthenticationBloc>().add(
-                                  CreateAccountClicked(
-                                      emailTextFieldController.text,
-                                      passwordTextFieldController.text));
-                            }
-                          : null,
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    if (state is AuthenticationUnattendedError) ...{
-                      const RedErrorMessage('Unattended error'),
-                    },
-                    if (state is AuthenticationOperationNotAllowed) ...{
-                      const RedErrorMessage('Operation not allowed'),
-                    },
-                  ],
-                ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 58,
+                  ),
+                  Column(
+                    children: [
+                      InputTextField(
+                        'Enter your email address',
+                        controller: emailTextFieldController,
+                        hintText: 'Email',
+                        onChanged: () {
+                          emailValidationResetTimer(context);
+                        },
+                        errorMessage: _getEmailAdressErrorMessage(state),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      InputTextField(
+                        'Create a password',
+                        controller: passwordTextFieldController,
+                        onChanged: () {
+                          passwordValidationResetTimer(context);
+                        },
+                        hintText: 'Password',
+                        obscureText: true,
+                        errorMessage: _getCreatePasswordErrorMessage(state),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      InputTextField(
+                        'Confirm password',
+                        controller: passwordConfirmTextFieldController,
+                        hintText: 'Confirm password',
+                        onChanged: () {
+                          passwordMatchingResetTimer(context);
+                        },
+                        obscureText: true,
+                        errorMessage: _getConfirmPasswordErrorMessage(state),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  DarkButton(
+                    'Create account',
+                    onPressed: (state is! AuthenticationErrorState) &&
+                            allFieldFilled()
+                        ? () {
+                            context.read<AuthenticationBloc>().add(
+                                CreateAccountClicked(
+                                    emailTextFieldController.text,
+                                    passwordTextFieldController.text));
+                          }
+                        : null,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  if (state is AuthenticationUnattendedError) ...{
+                    const RedErrorMessage('Unattended error'),
+                  },
+                  if (state is AuthenticationOperationNotAllowed) ...{
+                    const RedErrorMessage('Operation not allowed'),
+                  },
+                ],
               );
             },
           )),

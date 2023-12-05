@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:ubee_mini/features/authentication/data/data_source/firebase_user_api.dart';
-import 'package:ubee_mini/features/authentication/data/data_source/user_api.dart';
 import 'package:ubee_mini/features/authentication/data/repository/user_repository_impl.dart';
 import 'package:ubee_mini/features/authentication/domain/repository/user_repository.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/age_validation.dart';

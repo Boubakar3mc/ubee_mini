@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ubee_mini/features/authentication/data/data_source/user_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
 import 'package:ubee_mini/features/authentication/data/model/update_names_and_birthdate_response.dart';
+import 'package:ubee_mini/features/authentication/data/model/user_model.dart';
+
+abstract class UserApi{
+  Future<CreateUserResponse> createUser(String email, String password);
+  Future<UpdateNamesAndBirthdateResponse> updateNamesAndBirthdate(UserModel user);
+}
 
 class FireBaseUserApi implements UserApi {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -49,23 +54,16 @@ class FireBaseUserApi implements UserApi {
   }
 
   @override
-  Future<UpdateNamesAndBirthdateResponse> updateNamesAndBirthdate(String firstName, String lastName, DateTime birthDate) {
+  Future<UpdateNamesAndBirthdateResponse> updateNamesAndBirthdate(UserModel userModel) {
     try {
-        final userData = {
-          "firstName" : firstName,
-          "lastName" : lastName,
-          "birthYear" : birthDate.year,
-          "birthMonth" : birthDate.month,
-          "birthDay" : birthDate.day,
-        };
-
+        
         final String? userEmail = FirebaseAuth.instance.currentUser?.email;
         if(userEmail==null) {
         return Future.value(UpdateNamesAndBirthdateResponse(false,responseError: UpdateNamesAndBirthdateRepsonseError.notLogedIn));
         }
         
         FirebaseFirestore db = FirebaseFirestore.instance;
-        db.collection('Users').doc(userEmail).set(userData,SetOptions(merge: true));
+        db.collection('Users').doc(userEmail).set(userModel.toShapshot(),SetOptions(merge: true));
 
         return Future.value(UpdateNamesAndBirthdateResponse(true));
         
