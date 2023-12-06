@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/simple_app_bar.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
@@ -33,7 +34,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       create: (context) => injection.sl<AuthenticationBloc>(),
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: SimpleAppBar('Create an account', onArrowPressed: () {}),
+          appBar: SimpleAppBar(localized(context).createAnAccount, onArrowPressed: () {}),
           body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is AuthenticationUserSuccessfullyCreated) {
@@ -52,47 +53,47 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     Column(
                       children: [
                         InputTextField(
-                          'Enter your email address',
+                          localized(context).enterEmailAdress,
                           controller: emailTextFieldController,
-                          hintText: 'Email',
+                          hintText: localized(context).emailHint,
                           onChanged: () {
                             emailValidationResetTimer(context);
                           },
-                          errorMessage: _getEmailAdressErrorMessage(state),
+                          errorMessage: _getEmailAdressErrorMessage(state,context),
                         ),
                       ],
                     ),
                     Column(
                       children: [
                         InputTextField(
-                          'Create a password',
+                          localized(context).createPassword,
                           controller: passwordTextFieldController,
                           onChanged: () {
                             passwordValidationResetTimer(context);
                           },
-                          hintText: 'Password',
+                          hintText: localized(context).passwordHint,
                           obscureText: true,
-                          errorMessage: _getCreatePasswordErrorMessage(state),
+                          errorMessage: _getCreatePasswordErrorMessage(state,context),
                         ),
                       ],
                     ),
                     Column(
                       children: [
                         InputTextField(
-                          'Confirm password',
+                          localized(context).confirmPassword,
                           controller: passwordConfirmTextFieldController,
-                          hintText: 'Confirm password',
+                          hintText: localized(context).confPasswordHint,
                           onChanged: () {
                             passwordMatchingResetTimer(context);
                           },
                           obscureText: true,
-                          errorMessage: _getConfirmPasswordErrorMessage(state),
+                          errorMessage: _getConfirmPasswordErrorMessage(state,context),
                         ),
                       ],
                     ),
                     const Spacer(),
                     DarkButton(
-                      'Create account',
+                      localized(context).createAccountButton,
                       onPressed: (state is! AuthenticationErrorState) &&
                               allFieldFilled()
                           ? () {
@@ -107,10 +108,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       height: MediaQuery.of(context).size.height * 0.069,
                     ),
                     if (state is AuthenticationUnattendedError) ...{
-                      const RedErrorMessage('Unattended error'),
+                      RedErrorMessage(localized(context).unattendedError),
                     },
                     if (state is AuthenticationOperationNotAllowed) ...{
-                      const RedErrorMessage('Operation not allowed'),
+                      RedErrorMessage(localized(context).operationNotAllowed),
                     },
                   ],
                 ),
@@ -173,26 +174,26 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     return false;
   }
 
-  String _getEmailAdressErrorMessage(AuthenticationState state) {
-    if (state is AuthenticationInvalidEmail) return 'Invalid email adress';
-    if (state is AuthenticationEmailAlreadyInUse) return 'Email already in use';
+  String _getEmailAdressErrorMessage(AuthenticationState state,BuildContext context) {
+    if (state is AuthenticationInvalidEmail) return localized(context).invalidEmailErrorMesage;
+    if (state is AuthenticationEmailAlreadyInUse) return localized(context).emailAlreadyInUseErrorMessage;
     return "";
   }
 
-  String _getCreatePasswordErrorMessage(AuthenticationState state) {
+  String _getCreatePasswordErrorMessage(AuthenticationState state,BuildContext context) {
     if (state is AuthenticationInvalidPassword) {
-      return "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)";
+      return localized(context).badPasswordErrorMessage;
     }
     if (state is AuthenticationWeakPassword) {
-      return "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#\$&*~%)";
+      return localized(context).weakPasswordErrorMessage;
     }
 
     return "";
   }
 
-  String _getConfirmPasswordErrorMessage(AuthenticationState state) {
+  String _getConfirmPasswordErrorMessage(AuthenticationState state,BuildContext context) {
     if (state is AuthenticationNotMatchingPassword) {
-      return "Password doesn't match";
+      return localized(context).passwordNotMatchingErrorMessage;
     }
 
     return "";

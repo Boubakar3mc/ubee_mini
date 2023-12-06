@@ -1,3 +1,23 @@
 {
-    "appName": "Ubee"
+    "appName": "Ubee",
+
+    "createAnAccount" : "Creation d'un compte",
+    "enterEmailAdress" : "Entre ton adresse courriel",
+    "emailHint" : "Courriel",
+    "createPassword" : "Crée un mot de passe",
+    "passwordHint" : "Mot de passe",
+    "confirmPassword" : "Confirm le mot de passe",
+    "confPasswordHint" : "Confirm le mot de passe",
+    "createAccountButton" : "Créer le compte",
+
+    "unattendedError" : "Erreure inattendu",
+    "operationNotAllowed" : "Operation non permise",
+
+    "invalidEmailErrorMesage" : "Adresse courriel non valide",
+    "emailAlreadyInUseErrorMessage" : "Courriel déjà utilisé",
+
+    "badPasswordErrorMessage" : "Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
+    "weakPasswordErrorMessage" : "Mot de pass faible Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
+
+    "passwordNotMatchingErrorMessage" : "Le mot de passe ne correspond pas"
 }

@@ -1,3 +1,23 @@
 {
-    "appName": "Ubee"
+    "appName": "Ubee",
+
+    "createAnAccount" : "Create an account",
+    "enterEmailAdress" : "Enter your email address",
+    "emailHint" : "Email",
+    "createPassword" : "Create a password",
+    "passwordHint" : "Password",
+    "confirmPassword" : "Confirm password",
+    "confPasswordHint" : "Confirm password",
+    "createAccountButton" : "Create account",
+
+    "unattendedError" : "Unattended error",
+    "operationNotAllowed" : "Operation not allowed",
+
+    "invalidEmailErrorMesage" : "Invalid email adress",
+    "emailAlreadyInUseErrorMessage" : "Email already in use",
+
+    "badPasswordErrorMessage" : "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
+    "weakPasswordErrorMessage" : "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
+
+    "passwordNotMatchingErrorMessage" : "Password doesn't match"
 }

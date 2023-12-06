@@ -5,6 +5,7 @@ import 'package:ubee_mini/core/route/route.dart' as route;
 import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
 import 'package:ubee_mini/features/authentication/presentation/pages/welcom_to_ubee_view.dart';
 import 'package:ubee_mini/firebase_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'injection_container.dart' as di;
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
