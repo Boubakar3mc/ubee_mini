@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/rectangular_button.dart';
 import 'package:ubee_mini/core/route/route.dart' as route;
 
@@ -19,48 +20,48 @@ class _WelcomeToUbeeViewState extends State<WelcomeToUbeeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 57,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
             ),
-            const Text(
-              'Welcome to UBEE',
-              style: TextStyle(
+            Text(
+              localized(context).welcomeToUBEE,
+              style: const TextStyle(
                   color: themeDarkColor,
                   fontSize: 28,
                   fontWeight: FontWeight.w600),
             ),
-            const SizedBox(
-              height: 57,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
             ),
-            const Text(
-              'Your account was successfully created.',
-              style: TextStyle(
+            Text(
+              localized(context).accountSuccessfullyCreated,
+              style: const TextStyle(
                   color: themeDarkColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
             ),
-            const SizedBox(
-              height: 94,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.12,
             ),
             const Image(image: AssetImage('images/account_circle.webp')),
             const SizedBox(
               height: 59,
             ),
-            const Text('How do you intend to use UBEE?',
-                style: TextStyle(
+            Text(localized(context).intendToUseUBEE,
+                style: const TextStyle(
                     color: themeDarkColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w400)),
-            const SizedBox(
-              height: 18,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.022,
             ),
-            RectangularButton('I need help', onPressed: (){
+            RectangularButton(localized(context).iNeedHelpButton, onPressed: (){
 
             }),
-            const SizedBox(
-              height: 14,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.017,
             ),
-            RectangularButton('I want to work', onPressed: (){
+            RectangularButton(localized(context).iWantWorkButton, onPressed: (){
               Navigator.pushNamed(context, route.setupProfile);
             }),
           ],

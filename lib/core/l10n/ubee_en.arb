@@ -19,5 +19,14 @@
     "badPasswordErrorMessage" : "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
     "weakPasswordErrorMessage" : "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
 
-    "passwordNotMatchingErrorMessage" : "Password doesn't match"
+    "passwordNotMatchingErrorMessage" : "Password doesn't match",
+
+    
+    "welcomeToUBEE" : "Welcome to UBEE",
+    "accountSuccessfullyCreated" : "Your account was successfully created.",
+    "intendToUseUBEE" : "How do you intend to use UBEE?",
+    "iNeedHelpButton" : "I need help",
+    "iWantWorkButton" : "I want to work"
+
+
 }

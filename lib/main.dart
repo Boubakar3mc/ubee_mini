@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: route.authPage,
+      initialRoute: route.welcomePage,
       onGenerateRoute: route.controller,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('fr', ''),
       ],
-    
     );
   }
 }

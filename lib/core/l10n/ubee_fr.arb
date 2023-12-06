@@ -19,5 +19,11 @@
     "badPasswordErrorMessage" : "Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
     "weakPasswordErrorMessage" : "Mot de pass faible Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
 
-    "passwordNotMatchingErrorMessage" : "Le mot de passe ne correspond pas"
+    "passwordNotMatchingErrorMessage" : "Le mot de passe ne correspond pas",
+
+    "welcomeToUBEE" : "Bienvenu chez UBEE",
+    "accountSuccessfullyCreated" : "Votre compte a été créé avec succès.",
+    "intendToUseUBEE" : "Comment comptez-vous utiliser l'UBEE ?",
+    "iNeedHelpButton" : "J'ai besoin d'aide",
+    "iWantWorkButton" : "Je veux travailler"
 }
