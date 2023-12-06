@@ -127,6 +127,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   emailValidationResetTimer(BuildContext context) {
+    context.read<AuthenticationBloc>().add(TypingStarted());
     _emailValidationTypingTimer?.cancel();
     startEmailValidationTimer(context);
   }
@@ -141,6 +142,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   passwordValidationResetTimer(BuildContext context) {
+    context.read<AuthenticationBloc>().add(TypingStarted());
     _passwordValidationTypingTimer?.cancel();
     startPasswordValidationTimer(context);
   }
@@ -155,6 +157,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   passwordMatchingResetTimer(BuildContext context) {
+    context.read<AuthenticationBloc>().add(TypingStarted());
     _passwordMatchingTypingTimer?.cancel();
     startPasswordMatchingTimer(context);
   }

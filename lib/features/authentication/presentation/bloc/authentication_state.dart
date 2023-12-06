@@ -8,6 +8,8 @@ abstract class AuthenticationState extends Equatable {
 }
 class AuthenticationInitial extends AuthenticationState {}
 
+class AuthenticationTyping extends AuthenticationState{}
+
 class AuthenticationInvalidEmail extends AuthenticationState{}
 
 abstract class AuthenticationErrorState extends AuthenticationState{}
@@ -19,6 +21,8 @@ class AuthenticationNotMatchingPassword extends AuthenticationErrorState{}
 class AuthenticationUnattendedError extends AuthenticationErrorState{
   
 }
+
+
 
 class AuthenticationEmailAlreadyInUse extends AuthenticationErrorState{}
 

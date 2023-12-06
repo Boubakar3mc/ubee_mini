@@ -18,6 +18,8 @@ class AuthenticationBloc
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) {});
 
+    on<TypingStarted>(_typingStarted);
+
     on<EmailTypingStopped>(_validEmailCheck);
     on<PasswordTypingStopped>(_validPasswordCheck);
     on<PasswordConfirmationTypingStopped>(_matchPasswordCheck);
@@ -25,6 +27,10 @@ class AuthenticationBloc
 
     on<BirthdateChanged>(_validAge);
     on<ContinueSetupProfileClicked>(_continueSetupProfile);
+  }
+
+  void _typingStarted(TypingStarted event, Emitter<AuthenticationState> emit){
+    emit(AuthenticationTyping());
   }
 
   void _validEmailCheck(
