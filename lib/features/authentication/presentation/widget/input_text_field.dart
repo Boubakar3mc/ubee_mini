@@ -1,12 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
+import 'package:ubee_mini/core/utils/constants.dart';
+import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 class InputTextField extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
   final String hintText;
   final Function onChanged;
+  final Function? onTypingEnd;
   final bool obscureText;
   final String errorMessage;
   final Function() ?onTap;
@@ -15,6 +21,7 @@ class InputTextField extends StatefulWidget {
   const InputTextField(this.labelText,
       {required this.controller,
       required this.onChanged,
+      this.onTypingEnd,
       this.hintText = "",
       this.obscureText = false,
       this.errorMessage="",
@@ -28,6 +35,7 @@ class InputTextField extends StatefulWidget {
 }
 
 class _InputTextFieldState extends State<InputTextField> {
+  Timer? typingTimer;
   String lastValue = "";
   @override
   void initState() {
@@ -67,6 +75,7 @@ class _InputTextFieldState extends State<InputTextField> {
             obscureText: widget.obscureText,
             onChanged: (text) {
               widget.onChanged.call();
+              typpingResetTimer(context);
             },
           ),
           if(widget.errorMessage!="") _showError(),
@@ -77,5 +86,19 @@ class _InputTextFieldState extends State<InputTextField> {
   
   Widget _showError(){
     return Text("*${widget.errorMessage}",style: const TextStyle(color: Colors.red, fontSize: 14,fontWeight: FontWeight.w400));
+  }
+
+  startTyppingTimer(BuildContext context) {
+    typingTimer =
+        Timer(const Duration(milliseconds: textfieldCheckTime), () {
+          context.read<AuthenticationBloc>().add(TypingEnded());
+          widget.onTypingEnd?.call();
+    });
+  }
+
+  typpingResetTimer(BuildContext context) {
+    context.read<AuthenticationBloc>().add(TypingStarted());
+    typingTimer?.cancel();
+    startTyppingTimer(context);
   }
 }

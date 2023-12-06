@@ -23,7 +23,6 @@ class _SetupProfileState extends State<SetupProfile> {
 
   bool? conditionChecked = false;
 
-  final FocusNode _focus = FocusNode();
   DateTime? birthDate = DateTime.now();
 
   @override
@@ -32,7 +31,11 @@ class _SetupProfileState extends State<SetupProfile> {
       create: (context) => injection.sl<AuthenticationBloc>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const ProgressAppBar(),
+        appBar: ProgressAppBar(
+          onArrowPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state is AuthenticationNamesBirthdateSucessfullyUpdated) {
@@ -66,7 +69,7 @@ class _SetupProfileState extends State<SetupProfile> {
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
                   child: InputTextField("What's your first name?",
-                      controller: firstNameController, onChanged: () {}),
+                      controller: firstNameController, onChanged: () {},),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -133,16 +136,16 @@ class _SetupProfileState extends State<SetupProfile> {
                 },
                 DarkButton(
                   'Continue',
-                  onPressed: (state is! AuthenticationErrorState) &&
-                          _allFieldFilled()
-                      ? () {
-                          context.read<AuthenticationBloc>().add(
-                              ContinueSetupProfileClicked(
-                                  firstNameController.text,
-                                  lastNameController.text,
-                                  birthDate!));
-                        }
-                      : null,
+                  onPressed:
+                      (state is! AuthenticationErrorState) && _allFieldFilled()
+                          ? () {
+                              context.read<AuthenticationBloc>().add(
+                                  ContinueSetupProfileClicked(
+                                      firstNameController.text,
+                                      lastNameController.text,
+                                      birthDate!));
+                            }
+                          : null,
                 ),
                 const SizedBox(
                   height: 50,

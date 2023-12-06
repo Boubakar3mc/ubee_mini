@@ -11,6 +11,10 @@ final class TypingStarted extends AuthenticationEvent{
   
 }
 
+final class TypingEnded extends AuthenticationEvent{
+  
+}
+
 final class EmailTypingStopped extends AuthenticationEvent{
   final String email;
 

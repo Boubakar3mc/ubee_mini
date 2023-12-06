@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/simple_app_bar.dart';
-import 'package:ubee_mini/core/utils/constants.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
@@ -34,7 +33,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       create: (context) => injection.sl<AuthenticationBloc>(),
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: SimpleAppBar(localized(context).createAnAccount, onArrowPressed: () {}),
+          appBar: SimpleAppBar(localized(context).createAnAccount,
+              onArrowPressed: () {}),
           body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is AuthenticationUserSuccessfullyCreated) {
@@ -48,7 +48,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.055,
+                      height: MediaQuery.of(context).size.height * 0.055,
                     ),
                     Column(
                       children: [
@@ -56,10 +56,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           localized(context).enterEmailAdress,
                           controller: emailTextFieldController,
                           hintText: localized(context).emailHint,
-                          onChanged: () {
-                            emailValidationResetTimer(context);
+                          onChanged: () {},
+                          onTypingEnd: () {
+                            context.read<AuthenticationBloc>().add(
+                                EmailTypingStopped(
+                                    emailTextFieldController.text));
                           },
-                          errorMessage: _getEmailAdressErrorMessage(state,context),
+                          errorMessage:
+                              _getEmailAdressErrorMessage(state, context),
                         ),
                       ],
                     ),
@@ -68,12 +72,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         InputTextField(
                           localized(context).createPassword,
                           controller: passwordTextFieldController,
-                          onChanged: () {
-                            passwordValidationResetTimer(context);
+                          onChanged: () {},
+                          onTypingEnd: () {
+                            context.read<AuthenticationBloc>().add(
+                                PasswordTypingStopped(
+                                    passwordTextFieldController.text));
                           },
                           hintText: localized(context).passwordHint,
                           obscureText: true,
-                          errorMessage: _getCreatePasswordErrorMessage(state,context),
+                          errorMessage:
+                              _getCreatePasswordErrorMessage(state, context),
                         ),
                       ],
                     ),
@@ -83,11 +91,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           localized(context).confirmPassword,
                           controller: passwordConfirmTextFieldController,
                           hintText: localized(context).confPasswordHint,
-                          onChanged: () {
-                            passwordMatchingResetTimer(context);
+                          onChanged: () {},
+                          onTypingEnd: () {
+                            context.read<AuthenticationBloc>().add(
+                                PasswordConfirmationTypingStopped(
+                                    passwordTextFieldController.text,
+                                    passwordConfirmTextFieldController.text));
                           },
                           obscureText: true,
-                          errorMessage: _getConfirmPasswordErrorMessage(state,context),
+                          errorMessage:
+                              _getConfirmPasswordErrorMessage(state, context),
                         ),
                       ],
                     ),
@@ -121,51 +134,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     );
   }
 
-  startEmailValidationTimer(BuildContext context) {
-    _emailValidationTypingTimer =
-        Timer(const Duration(milliseconds: textfieldCheckTime), () {
-      context
-          .read<AuthenticationBloc>()
-          .add(EmailTypingStopped(emailTextFieldController.text));
-    });
-  }
-
-  emailValidationResetTimer(BuildContext context) {
-    context.read<AuthenticationBloc>().add(TypingStarted());
-    _emailValidationTypingTimer?.cancel();
-    startEmailValidationTimer(context);
-  }
-
-  startPasswordValidationTimer(BuildContext context) {
-    _passwordValidationTypingTimer =
-        Timer(const Duration(milliseconds: textfieldCheckTime), () {
-      context
-          .read<AuthenticationBloc>()
-          .add(PasswordTypingStopped(passwordTextFieldController.text));
-    });
-  }
-
-  passwordValidationResetTimer(BuildContext context) {
-    context.read<AuthenticationBloc>().add(TypingStarted());
-    _passwordValidationTypingTimer?.cancel();
-    startPasswordValidationTimer(context);
-  }
-
-  startPasswordMatchingTimer(BuildContext context) {
-    _passwordMatchingTypingTimer =
-        Timer(const Duration(milliseconds: textfieldCheckTime), () {
-      context.read<AuthenticationBloc>().add(PasswordConfirmationTypingStopped(
-          passwordTextFieldController.text,
-          passwordConfirmTextFieldController.text));
-    });
-  }
-
-  passwordMatchingResetTimer(BuildContext context) {
-    context.read<AuthenticationBloc>().add(TypingStarted());
-    _passwordMatchingTypingTimer?.cancel();
-    startPasswordMatchingTimer(context);
-  }
-
   bool allFieldFilled() {
     if (emailTextFieldController.text != "" &&
         passwordTextFieldController.text != "" &&
@@ -174,13 +142,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     return false;
   }
 
-  String _getEmailAdressErrorMessage(AuthenticationState state,BuildContext context) {
-    if (state is AuthenticationInvalidEmail) return localized(context).invalidEmailErrorMesage;
-    if (state is AuthenticationEmailAlreadyInUse) return localized(context).emailAlreadyInUseErrorMessage;
+  String _getEmailAdressErrorMessage(
+      AuthenticationState state, BuildContext context) {
+    if (state is AuthenticationInvalidEmail)
+      return localized(context).invalidEmailErrorMesage;
+    if (state is AuthenticationEmailAlreadyInUse)
+      return localized(context).emailAlreadyInUseErrorMessage;
     return "";
   }
 
-  String _getCreatePasswordErrorMessage(AuthenticationState state,BuildContext context) {
+  String _getCreatePasswordErrorMessage(
+      AuthenticationState state, BuildContext context) {
     if (state is AuthenticationInvalidPassword) {
       return localized(context).badPasswordErrorMessage;
     }
@@ -191,7 +163,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     return "";
   }
 
-  String _getConfirmPasswordErrorMessage(AuthenticationState state,BuildContext context) {
+  String _getConfirmPasswordErrorMessage(
+      AuthenticationState state, BuildContext context) {
     if (state is AuthenticationNotMatchingPassword) {
       return localized(context).passwordNotMatchingErrorMessage;
     }

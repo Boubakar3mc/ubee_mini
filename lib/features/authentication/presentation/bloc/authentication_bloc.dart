@@ -19,6 +19,7 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) {});
 
     on<TypingStarted>(_typingStarted);
+    on<TypingEnded>(_typingEnded);
 
     on<EmailTypingStopped>(_validEmailCheck);
     on<PasswordTypingStopped>(_validPasswordCheck);
@@ -31,6 +32,10 @@ class AuthenticationBloc
 
   void _typingStarted(TypingStarted event, Emitter<AuthenticationState> emit){
     emit(AuthenticationTyping());
+  }
+
+  void _typingEnded(TypingEnded event, Emitter<AuthenticationState> emit){
+    emit(AuthenticationInitial());
   }
 
   void _validEmailCheck(
