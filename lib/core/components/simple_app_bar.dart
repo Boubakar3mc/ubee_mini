@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 
 
@@ -17,14 +18,7 @@ class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget{
                   if(onArrowPressed!=null) onArrowPressed?.call();
                 },
                 icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
-            title: Text(
-              title,
-              style:const TextStyle(
-                  fontSize: 28,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600,
-                  height: 1.2),
-            ),
+            title: TopPageTitle(title:title),
             centerTitle: true,
             toolbarHeight: 100,
           );

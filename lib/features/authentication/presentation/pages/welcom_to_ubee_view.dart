@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/rectangular_button.dart';
@@ -23,13 +24,7 @@ class _WelcomeToUbeeViewState extends State<WelcomeToUbeeView> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
-            Text(
-              localized(context).welcomeToUBEE,
-              style: const TextStyle(
-                  color: themeDarkColor,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w600),
-            ),
+            TopPageTitle(title: localized(context).welcomeToUBEE),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
@@ -62,7 +57,7 @@ class _WelcomeToUbeeViewState extends State<WelcomeToUbeeView> {
               height: MediaQuery.of(context).size.height * 0.017,
             ),
             RectangularButton(localized(context).iWantWorkButton, onPressed: (){
-              Navigator.pushNamed(context, route.setupProfile);
+              Navigator.pushNamed(context, route.setupProfilePage);
             }),
           ],
         ),

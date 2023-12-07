@@ -1,12 +1,18 @@
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
 import 'package:ubee_mini/features/authentication/data/model/update_names_and_birthdate_response.dart';
 import 'package:ubee_mini/features/authentication/data/model/user_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class UserApi{
   Future<CreateUserResponse> createUser(String email, String password);
   Future<UpdateNamesAndBirthdateResponse> updateNamesAndBirthdate(UserModel user);
+
+  Future<bool> updatePicture(File file);
 }
 
 class FireBaseUserApi implements UserApi {
@@ -70,6 +76,12 @@ class FireBaseUserApi implements UserApi {
     } catch (e) {
         return Future.value(UpdateNamesAndBirthdateResponse(false,message: e.toString()));
     }
+  }
+  
+  @override
+  Future<bool> updatePicture(File file) {
+    //TODO: à Implémenter
+    return Future.value(false);
   }
 
 }

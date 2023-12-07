@@ -38,6 +38,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/account_circle.webp
+    - images/add_a_photo.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

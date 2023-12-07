@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:ubee_mini/features/authentication/data/data_source/firebase_user_api.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
 import 'package:ubee_mini/features/authentication/data/model/update_names_and_birthdate_response.dart';
@@ -20,6 +22,13 @@ class UserRepositoryImpl implements UserRepository{
   Future<UpdateNamesAndBirthdateResponse> updateNamesAndBirthdate(User user) {
     return userApi.updateNamesAndBirthdate(UserModel.fromEntity(user));
   }
+
+  @override
+  Future<bool> updatePicture(File file) {
+    return userApi.updatePicture(file);
+  }
+
+  
 
   
 }

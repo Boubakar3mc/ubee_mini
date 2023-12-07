@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/progress_app_bar.dart';
+import 'package:ubee_mini/core/components/top_page_title.dart';
+import 'package:ubee_mini/core/route/route.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/date_format.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
@@ -10,14 +12,14 @@ import 'package:ubee_mini/features/authentication/presentation/widget/input_text
 import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
-class SetupProfile extends StatefulWidget {
-  const SetupProfile({super.key});
+class SetupProfileView extends StatefulWidget {
+  const SetupProfileView({super.key});
 
   @override
-  State<SetupProfile> createState() => _SetupProfileState();
+  State<SetupProfileView> createState() => _SetupProfileViewState();
 }
 
-class _SetupProfileState extends State<SetupProfile> {
+class _SetupProfileViewState extends State<SetupProfileView> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
@@ -40,20 +42,14 @@ class _SetupProfileState extends State<SetupProfile> {
         body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state is AuthenticationNamesBirthdateSucessfullyUpdated) {
-              print('Profile updated');
+              Navigator.pushNamed(context, addPicturePage);
             }
           },
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  localized(context).setupYourProfile,
-                  style: const TextStyle(
-                      color: themeDarkColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600),
-                ),
+                TopPageTitle(title: localized(context).setupYourProfile),
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: SizedBox(
