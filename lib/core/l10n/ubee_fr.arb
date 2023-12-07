@@ -25,5 +25,14 @@
     "accountSuccessfullyCreated" : "Votre compte a été créé avec succès.",
     "intendToUseUBEE" : "Comment comptez-vous utiliser l'UBEE ?",
     "iNeedHelpButton" : "J'ai besoin d'aide",
-    "iWantWorkButton" : "Je veux travailler"
+    "iWantWorkButton" : "Je veux travailler",
+
+    "setupYourProfile" : "Créer votre profil",
+    "informationProvidedDisplay" : "Les informations que vous avez fournies seront affichées sur votre page de profil.",
+    "yourFirstName" : "Quel est votre prénom ?",
+    "yourLastName" : "Quel est votre nom de famille ?",
+    "yourBirthDate" : "Quelle est votre date de naissance ?",
+    "disclaimer" : "Je comprends que j'agirai en tant que contractant individuel au sein de l'organisation d'UBEE.",
+    "notLogedIn" : "Vous n'êtes pas authentifié",
+    "continueButton" : "Continuer"
 }

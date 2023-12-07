@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/date_format.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
@@ -46,20 +47,20 @@ class _SetupProfileState extends State<SetupProfile> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'Setup your profile',
-                  style: TextStyle(
+                Text(
+                  localized(context).setupYourProfile,
+                  style: const TextStyle(
                       color: themeDarkColor,
                       fontSize: 28,
                       fontWeight: FontWeight.w600),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 15),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
                   child: SizedBox(
                       width: 325,
                       child: Text(
-                        'The information you provided will displayed on your profile page.',
-                        style: TextStyle(
+                        localized(context).informationProvidedDisplay,
+                        style: const TextStyle(
                             color: themeDarkColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
@@ -68,18 +69,21 @@ class _SetupProfileState extends State<SetupProfile> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
-                  child: InputTextField("What's your first name?",
-                      controller: firstNameController, onChanged: () {},),
+                  child: InputTextField(
+                    localized(context).yourFirstName,
+                    controller: firstNameController,
+                    onChanged: () {},
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
-                  child: InputTextField("What's your last name?",
+                  child: InputTextField(localized(context).yourLastName,
                       controller: lastNameController, onChanged: () {}),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                InputTextField("What's your date of birth", readOnly: true,
+                InputTextField(localized(context).yourBirthDate, readOnly: true,
                     onTap: () {
                   showDatePicker(
                           context: context,
@@ -118,12 +122,12 @@ class _SetupProfileState extends State<SetupProfile> {
                       },
                       activeColor: const Color.fromARGB(255, 78, 145, 255),
                     ),
-                    const Flexible(
+                    Flexible(
                         child: SizedBox(
                             width: 214,
                             child: Text(
-                              'I understand that I will be acting as an individual contractor within the UBEE organization.',
-                              style: TextStyle(
+                             localized(context).disclaimer,
+                              style:const TextStyle(
                                   color: themeDarkColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
@@ -132,10 +136,10 @@ class _SetupProfileState extends State<SetupProfile> {
                 ),
                 const Spacer(),
                 if (state is AuthenticationNotLogedIn) ...{
-                  const RedErrorMessage('Not loged in'),
+                  RedErrorMessage(localized(context).notLogedIn),
                 },
                 DarkButton(
-                  'Continue',
+                  localized(context).continueButton,
                   onPressed:
                       (state is! AuthenticationErrorState) && _allFieldFilled()
                           ? () {

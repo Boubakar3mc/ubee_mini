@@ -26,7 +26,17 @@
     "accountSuccessfullyCreated" : "Your account was successfully created.",
     "intendToUseUBEE" : "How do you intend to use UBEE?",
     "iNeedHelpButton" : "I need help",
-    "iWantWorkButton" : "I want to work"
+    "iWantWorkButton" : "I want to work",
+
+    "setupYourProfile" : "Setup your profile",
+    "informationProvidedDisplay" : "The information you provided will displayed on your profile page.",
+    "yourFirstName" : "What's your first name?",
+    "yourLastName" : "What's your last name?",
+    "yourBirthDate" : "What's your date of birth",
+    "disclaimer" : "I understand that I will be acting as an individual contractor within the UBEE organization.",
+    "notLogedIn" : "Not loged in",
+    "continueButton" : "Continue"
+
 
 
 }

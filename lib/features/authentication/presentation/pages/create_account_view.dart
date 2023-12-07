@@ -8,7 +8,6 @@ import 'package:ubee_mini/features/authentication/presentation/widget/red_error_
 import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 import 'package:ubee_mini/core/route/route.dart' as route;
-import 'dart:async';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
@@ -22,10 +21,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   TextEditingController passwordTextFieldController = TextEditingController();
   TextEditingController passwordConfirmTextFieldController =
       TextEditingController();
-
-  Timer? _emailValidationTypingTimer;
-  Timer? _passwordValidationTypingTimer;
-  Timer? _passwordMatchingTypingTimer;
 
   @override
   Widget build(BuildContext context) {
