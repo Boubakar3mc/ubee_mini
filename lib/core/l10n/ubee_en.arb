@@ -35,7 +35,16 @@
     "yourBirthDate" : "What's your date of birth",
     "disclaimer" : "I understand that I will be acting as an individual contractor within the UBEE organization.",
     "notLogedIn" : "Not loged in",
-    "continueButton" : "Continue"
+    "continueButton" : "Continue",
+
+    "addProfilePicture" : "Add a profile picture",
+    "showProfessionalLook" : "Show-off your professional look and improve your chances of getting hired.",
+    "picGuidelines" : "Picture guidelines",
+    "bestSmile" : "Show your best smile",
+    "centerYourself" : "Center yourself in frame, from the shoulders up.",
+    "makeFaceVisible" : "Make sure your face is visible, well lit and in focus.",
+    "selectFromLibraryButton" : "Select from library",
+    "goToCameraButton" : "Go to camera"
 
 
 

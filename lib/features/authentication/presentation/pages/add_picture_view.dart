@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
+import 'package:ubee_mini/features/authentication/presentation/widget/expandable_card.dart';
 
 class AddPictureView extends StatefulWidget {
   const AddPictureView({super.key});
@@ -11,8 +13,6 @@ class AddPictureView extends StatefulWidget {
 }
 
 class _AddPictureViewState extends State<AddPictureView> {
-  bool _customTileExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +22,16 @@ class _AddPictureViewState extends State<AddPictureView> {
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const TopPageTitle(title: 'Add a profile picture'),
+          TopPageTitle(title: localized(context).addProfilePicture),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.012,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.85,
-            child: const Text(
-              'Show-off your professional look and improve your chances of getting hired.',
+            child: Text(
+              localized(context).showProfessionalLook,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: themeDarkColor),
@@ -44,123 +44,13 @@ class _AddPictureViewState extends State<AddPictureView> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.037,
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.7,
-            child: Card(
-              borderOnForeground: true,
-              color: Colors.white,
-              child: Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.transparent),
-                child: ExpansionTile(
-                  leading: const Icon(
-                    Icons.info,
-                    color: themeBlueColor,
-                  ),
-                  title: const Center(
-                    child: Text(
-                      'Picture guidelines',
-                      style: TextStyle(
-                          color: themeBlueColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  trailing: Icon(
-                      _customTileExpanded
-                          ? Icons.expand_less
-                          : Icons.expand_more,
-                      color: themeBlueColor),
-                  onExpansionChanged: (bool expanded) {
-                    setState(() {
-                      _customTileExpanded = expanded;
-                    });
-                  },
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '\u2022',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    height: 1,
-                                    color: themeBlueColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                  child: Text(
-                                'Show your best smile',
-                                style: TextStyle(
-                                    color: themeBlueColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5),
-                              )),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '\u2022',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    height: 1,
-                                    color: themeBlueColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                  child: Text(
-                                'Center yourself in frame, from the shoulders up.',
-                                style: TextStyle(
-                                    color: themeBlueColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5),
-                              )),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '\u2022',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    height: 1,
-                                    color: themeBlueColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                  child: Text(
-                                'Make sure your face is visible, well lit and in focus',
-                                style: TextStyle(
-                                    color: themeBlueColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5),
-                              )),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+           ExpandableCard(
+            title: localized(context).picGuidelines,
+            texts:  [
+              localized(context).bestSmile,
+              localized(context).centerYourself,
+              localized(context).makeFaceVisible,
+            ],
           ),
           const Spacer(),
           SizedBox(
@@ -171,8 +61,9 @@ class _AddPictureViewState extends State<AddPictureView> {
                     side: const BorderSide(
                         width: 2.0, color: themeLightBlueColor)),
                 onPressed: () {},
-                child: const Text('Select from library',
-                    style: TextStyle(
+                child: Text(localized(context).selectFromLibraryButton,
+                  textAlign: TextAlign.center,
+                    style: const TextStyle(
                         color: themeLightBlueColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600))),
@@ -185,11 +76,10 @@ class _AddPictureViewState extends State<AddPictureView> {
             height: MediaQuery.of(context).size.height * 0.06,
             child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                        width: 2.0, color: themeDarkColor)),
+                    side: const BorderSide(width: 2.0, color: themeDarkColor)),
                 onPressed: () {},
-                child: const Text('Go to camera',
-                    style: TextStyle(
+                child: Text(localized(context).goToCameraButton,
+                    style: const TextStyle(
                         color: themeDarkColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600))),

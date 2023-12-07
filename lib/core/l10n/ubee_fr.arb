@@ -34,5 +34,14 @@
     "yourBirthDate" : "Quelle est votre date de naissance ?",
     "disclaimer" : "Je comprends que j'agirai en tant que contractant individuel au sein de l'organisation d'UBEE.",
     "notLogedIn" : "Vous n'êtes pas authentifié",
-    "continueButton" : "Continuer"
+    "continueButton" : "Continuer",
+
+    "addProfilePicture" : "Ajouter une photo de profil",
+    "showProfessionalLook" : "Mettez en valeur votre aspect professionnel et augmentez vos chances d'être embauché.",
+    "picGuidelines" : "Guide photo",
+    "bestSmile" : "Affichez votre plus beau sourire",
+    "centerYourself" : "Se centrer dans le cadre, à partir des épaules.",
+    "makeFaceVisible" : "Veillez à ce que votre visage soit visible, bien éclairé et mis au point.",
+    "selectFromLibraryButton" : "Sélectionner dans la bibliothèque",
+    "goToCameraButton" : "Aller à la caméra"
 }
