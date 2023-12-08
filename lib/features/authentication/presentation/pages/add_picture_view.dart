@@ -111,7 +111,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                           style: OutlinedButton.styleFrom(
                               side: const BorderSide(
                                   width: 2.0, color: themeDarkColor)),
-                          onPressed: () {},
+                          onPressed: () {_pickImageFromCamera();},
                           child: Text(localized(context).goToCameraButton,
                               style: const TextStyle(
                                   color: themeDarkColor,
@@ -132,6 +132,15 @@ class _AddPictureViewState extends State<AddPictureView> {
   Future _pickImageFromGallery() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+
+  Future _pickImageFromCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (returnedImage == null) return;
     setState(() {
