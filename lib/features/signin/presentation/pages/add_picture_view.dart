@@ -7,8 +7,8 @@ import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
-import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/expandable_card.dart';
+import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/expandable_card.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
 class AddPictureView extends StatefulWidget {
@@ -24,12 +24,13 @@ class _AddPictureViewState extends State<AddPictureView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injection.sl<AuthenticationBloc>(),
+      create: (context) => injection.sl<SigninBloc>(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: const ProgressAppBar(
           currentPart: 3,
         ),
-        body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        body: BlocConsumer<SigninBloc, SignInState>(
           listener: (context, state) {},
           builder: (context, state) {
             return SizedBox(
@@ -55,14 +56,14 @@ class _AddPictureViewState extends State<AddPictureView> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.055,
                     ),
-                    if (state is AuthenticationInitial) ...{
+                    if (state.signInStateStatus == SignInStateStatus.initial) ...{
                       const Image(image: AssetImage('images/add_a_photo.webp')),
                     },
-                    if (state is AuthenticationPictureSelected) ...{
+                    if (state.signInStateStatus == SignInStateStatus.pictureSelected) ...{
                       CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.48 / 2,
                         backgroundImage: Image.file(
-                          _selectedImage!,
+                          state.selectedImage,
                         ).image,
                       )
                     },
@@ -86,11 +87,8 @@ class _AddPictureViewState extends State<AddPictureView> {
                           style: OutlinedButton.styleFrom(
                               side: const BorderSide(
                                   width: 2.0, color: themeLightBlueColor)),
-                          onPressed: () async {
-                            _pickImageFromGallery();
-                            context
-                                .read<AuthenticationBloc>()
-                                .add(const PictureSelected());
+                          onPressed: () {
+                            context.read<SigninBloc>().add(SelectImageFromLibraryClicked());
                           },
                           child: Text(
                               localized(context).selectFromLibraryButton,
@@ -111,7 +109,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                           style: OutlinedButton.styleFrom(
                               side: const BorderSide(
                                   width: 2.0, color: themeDarkColor)),
-                          onPressed: () {_pickImageFromCamera();},
+                          onPressed: () {},
                           child: Text(localized(context).goToCameraButton,
                               style: const TextStyle(
                                   color: themeDarkColor,
@@ -127,24 +125,5 @@ class _AddPictureViewState extends State<AddPictureView> {
         ),
       ),
     );
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnedImage == null) return;
-    setState(() {
-      _selectedImage = File(returnedImage!.path);
-    });
-  }
-
-  Future _pickImageFromCamera() async {
-    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (returnedImage == null) return;
-    setState(() {
-      _selectedImage = File(returnedImage!.path);
-    });
   }
 }

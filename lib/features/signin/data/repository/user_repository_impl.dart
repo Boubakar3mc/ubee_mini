@@ -1,12 +1,12 @@
 
 import 'dart:io';
 
-import 'package:ubee_mini/features/authentication/data/data_source/firebase_user_api.dart';
-import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
-import 'package:ubee_mini/features/authentication/data/model/update_names_and_birthdate_response.dart';
-import 'package:ubee_mini/features/authentication/data/model/user_model.dart';
-import 'package:ubee_mini/features/authentication/domain/entity/user_entity.dart';
-import 'package:ubee_mini/features/authentication/domain/repository/user_repository.dart';
+import 'package:ubee_mini/features/signin/data/data_source/firebase_user_api.dart';
+import 'package:ubee_mini/features/signin/data/model/create_user_response.dart';
+import 'package:ubee_mini/features/signin/data/model/update_names_and_birthdate_response.dart';
+import 'package:ubee_mini/features/signin/data/model/user_model.dart';
+import 'package:ubee_mini/features/signin/domain/entity/user_entity.dart';
+import 'package:ubee_mini/features/signin/domain/repository/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository{
   final UserApi userApi;

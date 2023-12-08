@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/constants.dart';
-import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 
 class InputTextField extends StatefulWidget {
   final String labelText;
@@ -91,13 +91,13 @@ class _InputTextFieldState extends State<InputTextField> {
   startTyppingTimer(BuildContext context) {
     typingTimer =
         Timer(const Duration(milliseconds: textfieldCheckTime), () {
-          context.read<AuthenticationBloc>().add(TypingEnded());
+          context.read<SigninBloc>().add(TypingEnded());
           widget.onTypingEnd?.call();
     });
   }
 
   typpingResetTimer(BuildContext context) {
-    context.read<AuthenticationBloc>().add(TypingStarted());
+    context.read<SigninBloc>().add(TypingStarted());
     typingTimer?.cancel();
     startTyppingTimer(context);
   }

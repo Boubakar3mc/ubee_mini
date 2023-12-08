@@ -6,10 +6,10 @@ import 'package:ubee_mini/core/route/route.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/date_format.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
-import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
+import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/red_error_message.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
 class SetupProfileView extends StatefulWidget {
@@ -31,7 +31,7 @@ class _SetupProfileViewState extends State<SetupProfileView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injection.sl<AuthenticationBloc>(),
+      create: (context) => injection.sl<SigninBloc>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: ProgressAppBar(
@@ -39,9 +39,9 @@ class _SetupProfileViewState extends State<SetupProfileView> {
             Navigator.pop(context);
           },
         ),
-        body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        body: BlocConsumer<SigninBloc, SignInState>(
           listener: (context, state) {
-            if (state is AuthenticationNamesBirthdateSucessfullyUpdated) {
+            if (state.signInStateStatus == SignInStateStatus.namesBirthdateSucessfullyUpdated) {
               Navigator.pushNamed(context, addPicturePage);
             }
           },
@@ -92,7 +92,7 @@ class _SetupProfileViewState extends State<SetupProfileView> {
                                 birthDate = value,
                               },
                             context
-                                .read<AuthenticationBloc>()
+                                .read<SigninBloc>()
                                 .add(BirthdateChanged(birthDate!)),
                             birthDateController.text = birthDate != null
                                 ? DateFormat.dasheMMddyyyy(birthDate!)
@@ -131,15 +131,15 @@ class _SetupProfileViewState extends State<SetupProfileView> {
                   ],
                 ),
                 const Spacer(),
-                if (state is AuthenticationNotLogedIn) ...{
+                if (state.signInStateError == SignInStateError.notLogedIn) ...{
                   RedErrorMessage(localized(context).notLogedIn),
                 },
                 DarkButton(
                   localized(context).continueButton,
                   onPressed:
-                      (state is! AuthenticationErrorState) && _allFieldFilled()
+                      (state.signInStateError != SignInStateError.none) && _allFieldFilled()
                           ? () {
-                              context.read<AuthenticationBloc>().add(
+                              context.read<SigninBloc>().add(
                                   ContinueSetupProfileClicked(
                                       firstNameController.text,
                                       lastNameController.text,
@@ -158,8 +158,8 @@ class _SetupProfileViewState extends State<SetupProfileView> {
     );
   }
 
-  _getBirthDateErrorMessage(AuthenticationState state) {
-    if (state is AuthenticationInvalidAge) {
+  _getBirthDateErrorMessage(SignInState state) {
+    if (state.signInStateError == SignInStateError.invalidAge) {
       return "You must be of legal age to proceed.";
     }
     return "";

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ubee_mini/features/authentication/presentation/pages/add_picture_view.dart';
-import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
-import 'package:ubee_mini/features/authentication/presentation/pages/setup_profile_view.dart';
-import 'package:ubee_mini/features/authentication/presentation/pages/welcom_to_ubee_view.dart';
+import 'package:ubee_mini/features/signin/presentation/pages/add_picture_view.dart';
+import 'package:ubee_mini/features/signin/presentation/pages/create_account_view.dart';
+import 'package:ubee_mini/features/signin/presentation/pages/setup_profile_view.dart';
+import 'package:ubee_mini/features/signin/presentation/pages/welcom_to_ubee_view.dart';
 
 // Route Names
 

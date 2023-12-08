@@ -1,22 +1,22 @@
 import 'package:get_it/get_it.dart';
-import 'package:ubee_mini/features/authentication/data/data_source/firebase_user_api.dart';
-import 'package:ubee_mini/features/authentication/data/repository/user_repository_impl.dart';
-import 'package:ubee_mini/features/authentication/domain/repository/user_repository.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/age_validation.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/create_user.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/email_validation.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/password_match_check.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/password_validation.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/update_names_and_birthdate.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/update_picture.dart';
-import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:ubee_mini/features/signin/data/data_source/firebase_user_api.dart';
+import 'package:ubee_mini/features/signin/data/repository/user_repository_impl.dart';
+import 'package:ubee_mini/features/signin/domain/repository/user_repository.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/age_validation.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/create_user.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/email_validation.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/password_match_check.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/password_validation.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/update_names_and_birthdate.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/update_picture.dart';
+import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Feature - Authentication
+  //! Feature - signin
   // Bloc
-  sl.registerFactory<AuthenticationBloc>(()=> AuthenticationBloc());
+  sl.registerFactory<SigninBloc>(()=> SigninBloc());
   // Repository
   sl.registerLazySingleton<UserApi>(() => FireBaseUserApi());
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));

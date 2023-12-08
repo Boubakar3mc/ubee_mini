@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ubee_mini/features/authentication/domain/use_cases/password_match_check.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/password_match_check.dart';
 
 void main(){
   testWidgets('Devrait retourner false', (WidgetTester tester) async{

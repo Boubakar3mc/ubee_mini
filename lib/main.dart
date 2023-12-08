@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ubee_mini/core/route/route.dart' as route;
-import 'package:ubee_mini/features/authentication/presentation/pages/create_account_view.dart';
-import 'package:ubee_mini/features/authentication/presentation/pages/welcom_to_ubee_view.dart';
 import 'package:ubee_mini/firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: route.addPicturePage,
+      initialRoute: route.authPage,
       onGenerateRoute: route.controller,
       title: 'Flutter Demo',
       theme: ThemeData(

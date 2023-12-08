@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/rectangular_button.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/rectangular_button.dart';
 import 'package:ubee_mini/core/route/route.dart' as route;
 
 class WelcomeToUbeeView extends StatefulWidget {

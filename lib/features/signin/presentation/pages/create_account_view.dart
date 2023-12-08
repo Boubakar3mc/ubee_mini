@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/simple_app_bar.dart';
 import 'package:ubee_mini/core/utils/localized.dart';
-import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/dark_button.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/red_error_message.dart';
-import 'package:ubee_mini/features/authentication/presentation/widget/input_text_field.dart';
+import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/red_error_message.dart';
+import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 import 'package:ubee_mini/core/route/route.dart' as route;
 
@@ -25,14 +25,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injection.sl<AuthenticationBloc>(),
+      create: (context) => injection.sl<SigninBloc>(),
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: SimpleAppBar(localized(context).createAnAccount,
               onArrowPressed: () {}),
-          body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+          body: BlocConsumer<SigninBloc, SignInState>(
             listener: (context, state) {
-              if (state is AuthenticationUserSuccessfullyCreated) {
+              if (state.signInStateStatus == SignInStateStatus.userSuccessfullyCreated) {
                 Navigator.pushNamed(context, route.welcomePage);
               }
             },
@@ -53,7 +53,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           hintText: localized(context).emailHint,
                           onChanged: () {},
                           onTypingEnd: () {
-                            context.read<AuthenticationBloc>().add(
+                            context.read<SigninBloc>().add(
                                 EmailTypingStopped(
                                     emailTextFieldController.text));
                           },
@@ -69,7 +69,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           controller: passwordTextFieldController,
                           onChanged: () {},
                           onTypingEnd: () {
-                            context.read<AuthenticationBloc>().add(
+                            context.read<SigninBloc>().add(
                                 PasswordTypingStopped(
                                     passwordTextFieldController.text));
                           },
@@ -88,7 +88,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           hintText: localized(context).confPasswordHint,
                           onChanged: () {},
                           onTypingEnd: () {
-                            context.read<AuthenticationBloc>().add(
+                            context.read<SigninBloc>().add(
                                 PasswordConfirmationTypingStopped(
                                     passwordTextFieldController.text,
                                     passwordConfirmTextFieldController.text));
@@ -102,10 +102,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     const Spacer(),
                     DarkButton(
                       localized(context).createAccountButton,
-                      onPressed: (state is! AuthenticationErrorState) &&
+                      onPressed: (state.signInStateError != SignInStateError.none) &&
                               allFieldFilled()
                           ? () {
-                              context.read<AuthenticationBloc>().add(
+                              context.read<SigninBloc>().add(
                                   CreateAccountClicked(
                                       emailTextFieldController.text,
                                       passwordTextFieldController.text));
@@ -115,10 +115,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.069,
                     ),
-                    if (state is AuthenticationUnattendedError) ...{
+                    if (state.signInStateError == SignInStateError.unattendedError) ...{
                       RedErrorMessage(localized(context).unattendedError),
                     },
-                    if (state is AuthenticationOperationNotAllowed) ...{
+                    if (state.signInStateError == SignInStateError.operationNotAllowed) ...{
                       RedErrorMessage(localized(context).operationNotAllowed),
                     },
                   ],
@@ -138,20 +138,23 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   String _getEmailAdressErrorMessage(
-      AuthenticationState state, BuildContext context) {
-    if (state is AuthenticationInvalidEmail)
+      SignInState state, BuildContext context) {
+    if (state.signInStateError == SignInStateError.invalidEmail){
       return localized(context).invalidEmailErrorMesage;
-    if (state is AuthenticationEmailAlreadyInUse)
+    }
+      ;
+    if (state.signInStateError == SignInStateError.emailAlreadyInUse){
       return localized(context).emailAlreadyInUseErrorMessage;
+    }
     return "";
   }
 
   String _getCreatePasswordErrorMessage(
-      AuthenticationState state, BuildContext context) {
-    if (state is AuthenticationInvalidPassword) {
+      SignInState state, BuildContext context) {
+    if (state.signInStateError == SignInStateError.invalidPassword) {
       return localized(context).badPasswordErrorMessage;
     }
-    if (state is AuthenticationWeakPassword) {
+    if (state.signInStateError == SignInStateError.weakPassword) {
       return localized(context).weakPasswordErrorMessage;
     }
 
@@ -159,8 +162,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   String _getConfirmPasswordErrorMessage(
-      AuthenticationState state, BuildContext context) {
-    if (state is AuthenticationNotMatchingPassword) {
+      SignInState state, BuildContext context) {
+    if (state.signInStateError == SignInStateError.notMatichingPassword) {
       return localized(context).passwordNotMatchingErrorMessage;
     }
 

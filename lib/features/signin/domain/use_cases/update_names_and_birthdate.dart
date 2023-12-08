@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:ubee_mini/core/utils/usecase.dart';
-import 'package:ubee_mini/features/authentication/data/model/update_names_and_birthdate_response.dart';
-import 'package:ubee_mini/features/authentication/domain/entity/user_entity.dart';
-import 'package:ubee_mini/features/authentication/domain/repository/user_repository.dart';
+import 'package:ubee_mini/features/signin/data/model/update_names_and_birthdate_response.dart';
+import 'package:ubee_mini/features/signin/domain/entity/user_entity.dart';
+import 'package:ubee_mini/features/signin/domain/repository/user_repository.dart';
 
 class UpdateNamesAndBirthdate extends UseCase<UpdateNamesAndBirthdateResponse,UpdateNamesAndBirthdateParams>{
   final UserRepository repo;

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:ubee_mini/core/utils/usecase.dart';
-import 'package:ubee_mini/features/authentication/domain/repository/user_repository.dart';
+import 'package:ubee_mini/features/signin/domain/repository/user_repository.dart';
 
 
 class UpdatePicture extends UseCase<bool, UpdatePictureParams>{

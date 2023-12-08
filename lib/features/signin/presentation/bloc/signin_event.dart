@@ -1,33 +1,33 @@
-part of 'authentication_bloc.dart';
+part of 'signin_bloc.dart';
 
-abstract class AuthenticationEvent extends Equatable {
-  const AuthenticationEvent();
+abstract class SigninEvent extends Equatable {
+  const SigninEvent();
 
   @override
   List<Object> get props => [];
 }
 
-final class TypingStarted extends AuthenticationEvent{
+final class TypingStarted extends SigninEvent{
   
 }
 
-final class TypingEnded extends AuthenticationEvent{
+final class TypingEnded extends SigninEvent{
   
 }
 
-final class EmailTypingStopped extends AuthenticationEvent{
+final class EmailTypingStopped extends SigninEvent{
   final String email;
 
   const EmailTypingStopped(this.email);
 }
 
-final class PasswordTypingStopped extends AuthenticationEvent {
+final class PasswordTypingStopped extends SigninEvent {
   final String password;
 
   const PasswordTypingStopped(this.password);
 }
 
-final class PasswordConfirmationTypingStopped extends AuthenticationEvent{
+final class PasswordConfirmationTypingStopped extends SigninEvent{
   final String password;
   final String confirmationPassword;
 
@@ -36,20 +36,20 @@ final class PasswordConfirmationTypingStopped extends AuthenticationEvent{
 
 
 
-final class CreateAccountClicked extends AuthenticationEvent{
+final class CreateAccountClicked extends SigninEvent{
   final String email;
   final String password;
 
   const CreateAccountClicked(this.email,this.password);
 }
 
-final class BirthdateChanged extends AuthenticationEvent{
+final class BirthdateChanged extends SigninEvent{
   final DateTime birthDate;
 
   const BirthdateChanged(this.birthDate);
 }
 
-final class ContinueSetupProfileClicked extends AuthenticationEvent{
+final class ContinueSetupProfileClicked extends SigninEvent{
   final String firstName;
   final String lastName;
   final DateTime birthDate;
@@ -57,6 +57,10 @@ final class ContinueSetupProfileClicked extends AuthenticationEvent{
   const ContinueSetupProfileClicked(this.firstName,this.lastName,this.birthDate);
 }
 
-final class PictureSelected extends AuthenticationEvent{
+final class SelectImageFromLibraryClicked extends SigninEvent{
+  
+}
+
+final class PictureSelected extends SigninEvent{
   const PictureSelected();
 }
