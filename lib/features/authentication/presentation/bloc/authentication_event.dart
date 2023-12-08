@@ -56,3 +56,7 @@ final class ContinueSetupProfileClicked extends AuthenticationEvent{
 
   const ContinueSetupProfileClicked(this.firstName,this.lastName,this.birthDate);
 }
+
+final class PictureSelected extends AuthenticationEvent{
+  const PictureSelected();
+}

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/features/authentication/data/model/create_user_response.dart';
@@ -28,6 +30,7 @@ class AuthenticationBloc
 
     on<BirthdateChanged>(_validAge);
     on<ContinueSetupProfileClicked>(_continueSetupProfile);
+    on<PictureSelected>(_pictureSelected);
   }
 
   void _typingStarted(TypingStarted event, Emitter<AuthenticationState> emit){
@@ -130,5 +133,9 @@ class AuthenticationBloc
           emit(AuthenticationInitial());
       }
     }
+  }
+
+  void _pictureSelected(PictureSelected event, Emitter<AuthenticationState> emit){
+    emit(AuthenticationPictureSelected());
   }
 }

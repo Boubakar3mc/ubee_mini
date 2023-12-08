@@ -24,6 +24,7 @@ dependencies:
   intl: any
   age_calculator: ^1.0.0
   cloud_firestore: ^4.13.3
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:

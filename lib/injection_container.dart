@@ -8,6 +8,7 @@ import 'package:ubee_mini/features/authentication/domain/use_cases/email_validat
 import 'package:ubee_mini/features/authentication/domain/use_cases/password_match_check.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/password_validation.dart';
 import 'package:ubee_mini/features/authentication/domain/use_cases/update_names_and_birthdate.dart';
+import 'package:ubee_mini/features/authentication/domain/use_cases/update_picture.dart';
 import 'package:ubee_mini/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 final sl = GetIt.instance;
@@ -28,6 +29,7 @@ Future<void> init() async {
   sl.registerLazySingleton<PasswordValidation>(() => PasswordValidation());
   sl.registerLazySingleton<AgeValidation>(() => AgeValidation());
   sl.registerLazySingleton<UpdateNamesAndBirthdate>(() => UpdateNamesAndBirthdate(sl()));
+  sl.registerLazySingleton<UpdatePicture>(() => UpdatePicture(sl()));
 
     //! Feature -
   // Bloc

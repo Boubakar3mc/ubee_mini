@@ -38,3 +38,7 @@ class AuthenticationNamesBirthdateSucessfullyUpdated extends AuthenticationState
 
 class AuthenticationNotLogedIn extends AuthenticationErrorState{}
 
+class AuthenticationPictureSelected extends AuthenticationState{
+  
+}
+
