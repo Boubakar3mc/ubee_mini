@@ -7,8 +7,7 @@ import 'package:ubee_mini/features/signin/domain/use_cases/create_user.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/email_validation.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_match_check.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_validation.dart';
-import 'package:ubee_mini/features/signin/domain/use_cases/update_names_and_birthdate.dart';
-import 'package:ubee_mini/features/signin/domain/use_cases/update_picture.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/update_user.dart';
 import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 
 final sl = GetIt.instance;
@@ -28,8 +27,7 @@ Future<void> init() async {
   sl.registerLazySingleton<PasswordMatchCheck>(() => PasswordMatchCheck());
   sl.registerLazySingleton<PasswordValidation>(() => PasswordValidation());
   sl.registerLazySingleton<AgeValidation>(() => AgeValidation());
-  sl.registerLazySingleton<UpdateNamesAndBirthdate>(() => UpdateNamesAndBirthdate(sl()));
-  sl.registerLazySingleton<UpdatePicture>(() => UpdatePicture(sl()));
+  sl.registerLazySingleton<UpdateUser>(() => UpdateUser(sl()));
 
     //! Feature -
   // Bloc
