@@ -2,7 +2,6 @@
 part of 'signin_bloc.dart';
 
 enum SignInStateError {
-  none,
   invalidEmail,
   invalidPassword,
   notMatichingPassword,
@@ -20,33 +19,49 @@ enum SignInStateStatus {
   userSuccessfullyCreated,
   pictureSelected,
   namesBirthdateSucessfullyUpdated,
+  error,
 }
 
-class SignInState extends Equatable {
+class SignInState{
   final String firstName;
   final String lastName;
   final DateTime birthDate;
   final File selectedImage;
   final String email;
-  final SignInStateError signInStateError;
   final SignInStateStatus signInStateStatus;
+  List<SignInStateError> errors = []; 
 
-  const SignInState({
+  SignInState({
     required this.firstName,
     required this.lastName,
     required this.birthDate,
     required this.selectedImage,
     required this.email,
-    required this.signInStateError,
     required this.signInStateStatus,
   });
 
-  factory SignInState.initial() => SignInState(firstName: "", lastName: "", birthDate: DateTime.now(), selectedImage: File('NoFile'), email: "", signInStateError: SignInStateError.none, signInStateStatus: SignInStateStatus.initial); 
+  factory SignInState.initial() => SignInState(firstName: "", lastName: "", birthDate: DateTime.now(), selectedImage: File('NoFile'), email: "", signInStateStatus: SignInStateStatus.initial); 
   
-  @override
-  List<Object?> get props => [firstName,lastName,birthDate,selectedImage,email,signInStateError,signInStateStatus];
 
+  void addError(SignInStateError error){
+    if(errors.contains(error)) return;
 
+    errors.add(error);
+  }
+
+  bool hasError(SignInStateError error){
+    if(errors.contains(error)) return true;
+    return false;
+  }
+
+  bool hasErrors(){
+    if(errors.isNotEmpty) return true;
+    return false;
+  }
+
+  void removeError(SignInStateError error){
+    errors.remove(error);
+  }
 
   SignInState copyWith({
     String? firstName,
@@ -54,17 +69,18 @@ class SignInState extends Equatable {
     DateTime? birthDate,
     File? selectedImage,
     String? email,
-    SignInStateError? signInStateError,
     SignInStateStatus? signInStateStatus,
   }) {
-    return SignInState(
+    var newSignInState = SignInState(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       birthDate: birthDate ?? this.birthDate,
       selectedImage: selectedImage ?? this.selectedImage,
       email: email ?? this.email,
-      signInStateError: signInStateError ?? this.signInStateError,
       signInStateStatus: signInStateStatus ?? this.signInStateStatus,
     );
+
+    newSignInState.errors = errors;
+    return newSignInState;
   }
 }

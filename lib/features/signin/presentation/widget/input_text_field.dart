@@ -91,7 +91,6 @@ class _InputTextFieldState extends State<InputTextField> {
   startTyppingTimer(BuildContext context) {
     typingTimer =
         Timer(const Duration(milliseconds: textfieldCheckTime), () {
-          context.read<SigninBloc>().add(TypingEnded());
           widget.onTypingEnd?.call();
     });
   }

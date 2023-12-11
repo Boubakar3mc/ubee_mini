@@ -102,7 +102,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     const Spacer(),
                     DarkButton(
                       localized(context).createAccountButton,
-                      onPressed: (state.signInStateError != SignInStateError.none) &&
+                      onPressed: (!state.hasErrors()) &&
                               allFieldFilled()
                           ? () {
                               context.read<SigninBloc>().add(
@@ -115,10 +115,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.069,
                     ),
-                    if (state.signInStateError == SignInStateError.unattendedError) ...{
+                    if (state.hasError(SignInStateError.unattendedError)) ...{
                       RedErrorMessage(localized(context).unattendedError),
                     },
-                    if (state.signInStateError == SignInStateError.operationNotAllowed) ...{
+                    if (state.hasError(SignInStateError.operationNotAllowed)) ...{
                       RedErrorMessage(localized(context).operationNotAllowed),
                     },
                   ],
@@ -139,11 +139,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   String _getEmailAdressErrorMessage(
       SignInState state, BuildContext context) {
-    if (state.signInStateError == SignInStateError.invalidEmail){
+    if (state.signInStateStatus == SignInStateStatus.error && state.hasError(SignInStateError.invalidEmail)){
       return localized(context).invalidEmailErrorMesage;
     }
-      ;
-    if (state.signInStateError == SignInStateError.emailAlreadyInUse){
+      
+    if (state.signInStateStatus == SignInStateStatus.error && state.hasError(SignInStateError.emailAlreadyInUse)){
       return localized(context).emailAlreadyInUseErrorMessage;
     }
     return "";
@@ -151,10 +151,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   String _getCreatePasswordErrorMessage(
       SignInState state, BuildContext context) {
-    if (state.signInStateError == SignInStateError.invalidPassword) {
+    if (state.hasError(SignInStateError.invalidPassword)) {
       return localized(context).badPasswordErrorMessage;
     }
-    if (state.signInStateError == SignInStateError.weakPassword) {
+    if (state.hasError(SignInStateError.weakPassword)) {
       return localized(context).weakPasswordErrorMessage;
     }
 
@@ -163,7 +163,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   String _getConfirmPasswordErrorMessage(
       SignInState state, BuildContext context) {
-    if (state.signInStateError == SignInStateError.notMatichingPassword) {
+    if (state.hasError(SignInStateError.notMatichingPassword)) {
       return localized(context).passwordNotMatchingErrorMessage;
     }
 

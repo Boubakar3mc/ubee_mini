@@ -41,7 +41,8 @@ class _SetupProfileViewState extends State<SetupProfileView> {
         ),
         body: BlocConsumer<SigninBloc, SignInState>(
           listener: (context, state) {
-            if (state.signInStateStatus == SignInStateStatus.namesBirthdateSucessfullyUpdated) {
+            if (state.signInStateStatus ==
+                SignInStateStatus.namesBirthdateSucessfullyUpdated) {
               Navigator.pushNamed(context, addPicturePage);
             }
           },
@@ -122,8 +123,8 @@ class _SetupProfileViewState extends State<SetupProfileView> {
                         child: SizedBox(
                             width: 214,
                             child: Text(
-                             localized(context).disclaimer,
-                              style:const TextStyle(
+                              localized(context).disclaimer,
+                              style: const TextStyle(
                                   color: themeDarkColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
@@ -131,21 +132,20 @@ class _SetupProfileViewState extends State<SetupProfileView> {
                   ],
                 ),
                 const Spacer(),
-                if (state.signInStateError == SignInStateError.notLogedIn) ...{
+                if (state.hasError(SignInStateError.notLogedIn)) ...{
                   RedErrorMessage(localized(context).notLogedIn),
                 },
                 DarkButton(
                   localized(context).continueButton,
-                  onPressed:
-                      (state.signInStateError != SignInStateError.none) && _allFieldFilled()
-                          ? () {
-                              context.read<SigninBloc>().add(
-                                  ContinueSetupProfileClicked(
-                                      firstNameController.text,
-                                      lastNameController.text,
-                                      birthDate!));
-                            }
-                          : null,
+                  onPressed: !state.hasErrors() && _allFieldFilled()
+                      ? () {
+                          context.read<SigninBloc>().add(
+                              ContinueSetupProfileClicked(
+                                  firstNameController.text,
+                                  lastNameController.text,
+                                  birthDate!));
+                        }
+                      : null,
                 ),
                 const SizedBox(
                   height: 50,
@@ -159,7 +159,7 @@ class _SetupProfileViewState extends State<SetupProfileView> {
   }
 
   _getBirthDateErrorMessage(SignInState state) {
-    if (state.signInStateError == SignInStateError.invalidAge) {
+    if (state.hasError(SignInStateError.invalidAge)) {
       return "You must be of legal age to proceed.";
     }
     return "";
