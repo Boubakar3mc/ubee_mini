@@ -107,7 +107,9 @@ class _AddPictureViewState extends State<AddPictureView> {
                           style: OutlinedButton.styleFrom(
                               side: const BorderSide(
                                   width: 2.0, color: themeDarkColor)),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<SigninBloc>().add(TakeImageWithCameraClicked());
+                          },
                           child: Text(localized(context).goToCameraButton,
                               style: const TextStyle(
                                   color: themeDarkColor,

@@ -31,6 +31,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
     on<ContinueSetupProfileClicked>(_continueSetupProfile);
 
     on<SelectImageFromLibraryClicked>(_selectFromLibrary);
+    on<TakeImageWithCameraClicked>(_takeFromCamera);
   }
 
   void _typingStarted(TypingStarted event, Emitter<SignInState> emit) {
@@ -70,7 +71,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
     isValidPassword
         ? state.removeError(SignInStateError.invalidPassword)
         : state.addError(SignInStateError.invalidPassword);
-        
+
     isPasswordMatch
         ? state.removeError(SignInStateError.notMatichingPassword)
         : state.addError(SignInStateError.notMatichingPassword);
@@ -172,6 +173,18 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
       SelectImageFromLibraryClicked event, Emitter<SignInState> emit) async {
     XFile? selectedImage =
         await imagePicker.pickImage(source: ImageSource.gallery);
+    if (selectedImage != null) {
+      File selectedFile = File(selectedImage.path);
+      emit(state.copyWith(
+          signInStateStatus: SignInStateStatus.pictureSelected,
+          selectedImage: selectedFile));
+    }
+  }
+
+  void _takeFromCamera(
+      TakeImageWithCameraClicked event, Emitter<SignInState> emit) async {
+    XFile? selectedImage =
+        await imagePicker.pickImage(source: ImageSource.camera);
     if (selectedImage != null) {
       File selectedFile = File(selectedImage.path);
       emit(state.copyWith(
