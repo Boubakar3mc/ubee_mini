@@ -18,7 +18,7 @@ enum SignInStateStatus {
   typing,
   userSuccessfullyCreated,
   pictureSelected,
-  namesBirthdateSucessfullyUpdated,
+  namesBirthdateSetted,
   error,
 }
 

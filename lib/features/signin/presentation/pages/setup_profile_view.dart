@@ -42,7 +42,7 @@ class _SetupProfileViewState extends State<SetupProfileView> {
         body: BlocConsumer<SigninBloc, SignInState>(
           listener: (context, state) {
             if (state.signInStateStatus ==
-                SignInStateStatus.namesBirthdateSucessfullyUpdated) {
+                SignInStateStatus.namesBirthdateSetted) {
               Navigator.pushNamed(context, addPicturePage);
             }
           },

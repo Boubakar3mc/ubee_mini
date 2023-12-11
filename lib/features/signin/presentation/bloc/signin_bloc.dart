@@ -4,13 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ubee_mini/features/signin/data/model/create_user_response.dart';
-import 'package:ubee_mini/features/signin/data/model/update_names_and_birthdate_response.dart';
+import 'package:ubee_mini/features/signin/data/model/update_user_response.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/age_validation.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/create_user.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/email_validation.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_match_check.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_validation.dart';
-import 'package:ubee_mini/features/signin/domain/use_cases/update_names_and_birthdate.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
 part 'signin_event.dart';
@@ -173,25 +172,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
 
   void _continueSetupProfile(
       ContinueSetupProfileClicked event, Emitter<SignInState> emit) async {
-    UpdateNamesAndBirthdateResponse updateResponse = await injection
-        .sl<UpdateNamesAndBirthdate>()
-        .call(UpdateNamesAndBirthdateParams(
-            event.firstName, event.lastName, event.birthDate));
-
-    if (updateResponse.isSuccess) {
-      state.removeError(SignInStateError.notLogedIn);
-      emit(state.copyWith(signInStateStatus: SignInStateStatus.namesBirthdateSucessfullyUpdated));
-    } else {
-      switch (updateResponse.responseError) {
-        case UpdateNamesAndBirthdateRepsonseError.notLogedIn:
-          state.addError(SignInStateError.notLogedIn);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
-          break;
-        default:
-          state.removeError(SignInStateError.notLogedIn);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
-      }
-    }
+    emit(state.copyWith(firstName: event.firstName,lastName: event.lastName,birthDate: event.birthDate,signInStateStatus: SignInStateStatus.namesBirthdateSetted));
   }
 
   void _selectFromLibrary(
