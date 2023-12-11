@@ -22,7 +22,10 @@ class _AddPictureViewState extends State<AddPictureView> {
       create: (context) => injection.sl<SigninBloc>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const ProgressAppBar(
+        appBar: ProgressAppBar(
+          onArrowPressed: () {
+            Navigator.pop(context);
+          },
           currentPart: 3,
         ),
         body: BlocConsumer<SigninBloc, SignInState>(

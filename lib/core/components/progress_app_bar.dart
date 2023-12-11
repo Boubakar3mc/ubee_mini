@@ -20,7 +20,9 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         AppBar(
             leading: IconButton(
-                onPressed: () {if(onArrowPressed!=null) onArrowPressed?.call();},
+                onPressed: () {
+                  if(onArrowPressed!=null) onArrowPressed?.call();
+                },
                 icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
             title: Row(
               children: getProgressBar(currentPart),
