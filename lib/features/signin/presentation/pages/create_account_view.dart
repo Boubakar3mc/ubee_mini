@@ -71,7 +71,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           onTypingEnd: () {
                             context.read<SigninBloc>().add(
                                 PasswordTypingStopped(
-                                    passwordTextFieldController.text));
+                                    passwordTextFieldController.text,
+                                    passwordConfirmTextFieldController.text));
                           },
                           hintText: localized(context).passwordHint,
                           obscureText: true,
@@ -89,7 +90,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           onChanged: () {},
                           onTypingEnd: () {
                             context.read<SigninBloc>().add(
-                                PasswordConfirmationTypingStopped(
+                                PasswordTypingStopped(
                                     passwordTextFieldController.text,
                                     passwordConfirmTextFieldController.text));
                           },

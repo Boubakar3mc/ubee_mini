@@ -25,7 +25,6 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
 
     on<EmailTypingStopped>(_validEmailCheck);
     on<PasswordTypingStopped>(_validPasswordCheck);
-    on<PasswordConfirmationTypingStopped>(_matchPasswordCheck);
     on<CreateAccountClicked>(_createAccount);
 
     on<BirthdateChanged>(_validAge);
@@ -65,31 +64,20 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
         .sl<PasswordValidation>()
         .call(PasswordValidationParams(event.password));
 
-    if (!isValidPassword) {
-      state.addError(SignInStateError.invalidPassword);
-      emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
-    } else {
-      state.removeError(SignInStateError.invalidPassword);
-      if (!state.hasErrors()) {
-        emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
-      }
-    }
-  }
-
-  void _matchPasswordCheck(PasswordConfirmationTypingStopped event,
-      Emitter<SignInState> emit) async {
     bool isPasswordMatch = await injection.sl<PasswordMatchCheck>().call(
         PasswordMathcCheckParams(event.password, event.confirmationPassword));
 
-    if (!isPasswordMatch) {
-      state.addError(SignInStateError.notMatichingPassword);
-      emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
-    } else {
-      state.removeError(SignInStateError.notMatichingPassword);
-      if (!state.hasErrors()) {
-        emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
-      }
-    }
+    isValidPassword
+        ? state.removeError(SignInStateError.invalidPassword)
+        : state.addError(SignInStateError.invalidPassword);
+        
+    isPasswordMatch
+        ? state.removeError(SignInStateError.notMatichingPassword)
+        : state.addError(SignInStateError.notMatichingPassword);
+
+    state.hasErrors()
+        ? emit(state.copyWith(signInStateStatus: SignInStateStatus.error))
+        : emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
   }
 
   void _createAccount(
@@ -104,7 +92,8 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
       state.removeError(SignInStateError.invalidEmail);
       state.removeError(SignInStateError.weakPassword);
       state.removeError(SignInStateError.operationNotAllowed);
-      emit(state.copyWith(signInStateStatus: SignInStateStatus.userSuccessfullyCreated));
+      emit(state.copyWith(
+          signInStateStatus: SignInStateStatus.userSuccessfullyCreated));
     } else {
       switch (createUserResponse.responseError) {
         case CreateUserResponseError.none:
@@ -172,7 +161,11 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
 
   void _continueSetupProfile(
       ContinueSetupProfileClicked event, Emitter<SignInState> emit) async {
-    emit(state.copyWith(firstName: event.firstName,lastName: event.lastName,birthDate: event.birthDate,signInStateStatus: SignInStateStatus.namesBirthdateSetted));
+    emit(state.copyWith(
+        firstName: event.firstName,
+        lastName: event.lastName,
+        birthDate: event.birthDate,
+        signInStateStatus: SignInStateStatus.namesBirthdateSetted));
   }
 
   void _selectFromLibrary(

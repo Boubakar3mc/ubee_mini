@@ -23,17 +23,10 @@ final class EmailTypingStopped extends SigninEvent{
 
 final class PasswordTypingStopped extends SigninEvent {
   final String password;
-
-  const PasswordTypingStopped(this.password);
-}
-
-final class PasswordConfirmationTypingStopped extends SigninEvent{
-  final String password;
   final String confirmationPassword;
 
-  const PasswordConfirmationTypingStopped(this.password,this.confirmationPassword);
+  const PasswordTypingStopped(this.password,this.confirmationPassword);
 }
-
 
 
 final class CreateAccountClicked extends SigninEvent{
