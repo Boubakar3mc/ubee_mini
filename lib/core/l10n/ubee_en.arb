@@ -44,7 +44,10 @@
     "centerYourself" : "Center yourself in frame, from the shoulders up.",
     "makeFaceVisible" : "Make sure your face is visible, well lit and in focus.",
     "selectFromLibraryButton" : "Select from library",
-    "goToCameraButton" : "Go to camera"
+    "goToCameraButton" : "Go to camera",
+    "lookingGreat" : "Looking great!",
+    "changePicutreButton" : "Change picture",
+    "continueButton" : "Continue"
 
 
 

@@ -21,18 +21,20 @@ class _AddPictureViewState extends State<AddPictureView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => injection.sl<SigninBloc>(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: ProgressAppBar(
-          onArrowPressed: () {
-            Navigator.pop(context);
-          },
-          currentPart: 3,
-        ),
-        body: BlocConsumer<SigninBloc, SignInState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return SizedBox(
+      child: BlocConsumer<SigninBloc, SignInState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: ProgressAppBar(
+              onArrowPressed: () {
+                state.signInStateStatus==SignInStateStatus.pictureSelected?
+                context.read<SigninBloc>().add(ChangePictureClicked()):
+                Navigator.pop(context);
+              },
+              currentPart: 3,
+            ),
+            body: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +42,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                     TopPageTitle(
                         title: state.signInStateStatus ==
                                 SignInStateStatus.pictureSelected
-                            ? "Looking great!"
+                            ? localized(context).lookingGreat
                             : localized(context).addProfilePicture),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.012,
@@ -60,7 +62,10 @@ class _AddPictureViewState extends State<AddPictureView> {
                       ),
                     },
                     SizedBox(
-                      height: state.signInStateStatus==SignInStateStatus.pictureSelected? MediaQuery.of(context).size.height * 0.12:MediaQuery.of(context).size.height * 0.055,
+                      height: state.signInStateStatus ==
+                              SignInStateStatus.pictureSelected
+                          ? MediaQuery.of(context).size.height * 0.12
+                          : MediaQuery.of(context).size.height * 0.055,
                     ),
                     if (state.signInStateStatus ==
                         SignInStateStatus.initial) ...{
@@ -121,7 +126,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                         SignInStateStatus.pictureSelected) ...{
                       const Spacer(),
                       SmallBorderButton(
-                        text: "Change picture",
+                        text: localized(context).changePicutreButton,
                         color: themeLightBlueColor,
                         onPressed: () {
                           context
@@ -133,7 +138,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                         height: MediaQuery.of(context).size.height * 0.015,
                       ),
                       SmallBorderButton(
-                        text: "Continue",
+                        text: localized(context).continueButton,
                         color: themeDarkColor,
                         onPressed: () {},
                       ),
@@ -142,9 +147,9 @@ class _AddPictureViewState extends State<AddPictureView> {
                       )
                     },
                   ]),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

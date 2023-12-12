@@ -43,5 +43,8 @@
     "centerYourself" : "Se centrer dans le cadre, à partir des épaules.",
     "makeFaceVisible" : "Veillez à ce que votre visage soit visible, bien éclairé et mis au point.",
     "selectFromLibraryButton" : "Sélectionner dans la bibliothèque",
-    "goToCameraButton" : "Aller à la caméra"
+    "goToCameraButton" : "Aller à la caméra",
+    "lookingGreat" : "C'est très bien !",
+    "changePicutreButton" : "Changer la photo",
+    "continueButton" : "Continuer"
 }
