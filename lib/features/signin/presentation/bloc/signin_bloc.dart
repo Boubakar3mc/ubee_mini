@@ -32,6 +32,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
 
     on<SelectImageFromLibraryClicked>(_selectFromLibrary);
     on<TakeImageWithCameraClicked>(_takeFromCamera);
+    on<ChangePictureClicked>(_changePicture);
   }
 
   void _typingStarted(TypingStarted event, Emitter<SignInState> emit) {
@@ -191,5 +192,9 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
           signInStateStatus: SignInStateStatus.pictureSelected,
           selectedImage: selectedFile));
     }
+  }
+
+  void _changePicture(ChangePictureClicked event, Emitter<SignInState> emit){
+    emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
   }
 }

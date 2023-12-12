@@ -59,3 +59,5 @@ final class TakeImageWithCameraClicked extends SigninEvent{}
 final class PictureSelected extends SigninEvent{
   const PictureSelected();
 }
+
+final class ChangePictureClicked extends SigninEvent{}
