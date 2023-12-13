@@ -11,6 +11,9 @@ enum SignInStateError {
   operationNotAllowed,
   invalidAge,
   notLogedIn,
+  unknown,
+  unauthorized,
+  retryLimitExceeded
 }
 
 enum SignInStateStatus {
@@ -20,6 +23,7 @@ enum SignInStateStatus {
   pictureSelected,
   namesBirthdateSetted,
   error,
+  userSuccessfullyUpdated,
 }
 
 class SignInState{
@@ -61,6 +65,15 @@ class SignInState{
 
   void removeError(SignInStateError error){
     errors.remove(error);
+  }
+
+  void removeAllErrors(){
+    errors.clear();
+  }
+
+  void onlyError(SignInStateError error){
+    errors.clear();
+    errors.add(error);
   }
 
   SignInState copyWith({

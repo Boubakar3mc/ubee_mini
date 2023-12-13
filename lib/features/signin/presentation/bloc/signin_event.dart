@@ -62,3 +62,11 @@ final class PictureSelected extends SigninEvent{
 
 final class ChangePictureClicked extends SigninEvent{}
 
+final class ConfirmButtonClicked extends SigninEvent{
+  final String firstName;
+  final String lastName;
+  final DateTime birthDate;
+  final File pictureFile;
+
+  const ConfirmButtonClicked(this.firstName,this.lastName,this.birthDate,this.pictureFile);
+}

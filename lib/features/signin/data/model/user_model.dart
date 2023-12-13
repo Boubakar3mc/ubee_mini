@@ -9,11 +9,11 @@ class UserModel extends User{
     return UserModel(snapshot['firstName'],snapshot['lastName'],snapshot['birthDate'],snapshot['picture']);
   }
 
-  Map<String,dynamic> toShapshot(){
+  Map<String,dynamic> toShapshot(String downloadURL){
     return  {'firstName': firstName,
           'lastName': lastName,
           'birthDate' : birthDate,
-          'picture' : picture,};
+          'dowloadURL' : downloadURL,};
   }
 
   factory UserModel.fromEntity(User user){

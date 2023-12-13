@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
 
-  DateTime? birthDate;
+  DateTime birthDate = DateTime.now();
   bool loadedTimeElapsed = false; //Timer to wait for textfields initial value to be loaded
 
    @override
@@ -40,8 +39,13 @@ class _ReviewProfileState extends State<ReviewProfile> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SigninBloc, SignInState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state.signInStateStatus == SignInStateStatus.userSuccessfullyUpdated){
+          Navigator.pushNamed(context, userSuccessfullyCreated);
+        }
+      },
       builder: (context, state) {
+        birthDate = state.birthDate;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: const ProgressAppBar(
@@ -111,11 +115,11 @@ class _ReviewProfileState extends State<ReviewProfile> {
                   readOnly: true,
                   controller: birthDateController,
                   onChanged: () {},
-                  initialValue: DateFormat.dasheMMddyyyy(state.birthDate),
+                  initialValue: DateFormat.dasheMMddyyyy(birthDate),
                   onTap: () {
                     showDatePicker(
                             context: context,
-                            initialDate: birthDate ?? state.birthDate,
+                            initialDate: birthDate ,
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now())
                         .then((value) => {
@@ -125,10 +129,8 @@ class _ReviewProfileState extends State<ReviewProfile> {
                                 },
                               context
                                   .read<SigninBloc>()
-                                  .add(BirthdateChanged(birthDate!)),
-                              birthDateController.text = birthDate != null
-                                  ? DateFormat.dasheMMddyyyy(birthDate!)
-                                  : "",
+                                  .add(BirthdateChanged(birthDate)),
+                              birthDateController.text = DateFormat.dasheMMddyyyy(birthDate),
                             });
                   },
                   errorMessage: _getBirthDateErrorMessage(state),
@@ -149,7 +151,9 @@ class _ReviewProfileState extends State<ReviewProfile> {
                 ),
                 DarkButton("Confirm",
                     onPressed:
-                        _allFieldFilled()&&!state.hasErrors()&&loadedTimeElapsed?(){}:null,),
+                        _allFieldFilled()&&!state.hasErrors()&&loadedTimeElapsed?(){
+                          context.read<SigninBloc>().add(ConfirmButtonClicked(firstNameController.text, lastNameController.text, birthDate, state.selectedImage));
+                        }:null,),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.08,
                 )

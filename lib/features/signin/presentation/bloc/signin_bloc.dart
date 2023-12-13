@@ -10,6 +10,7 @@ import 'package:ubee_mini/features/signin/domain/use_cases/create_user.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/email_validation.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_match_check.dart';
 import 'package:ubee_mini/features/signin/domain/use_cases/password_validation.dart';
+import 'package:ubee_mini/features/signin/domain/use_cases/update_user.dart';
 import 'package:ubee_mini/injection_container.dart' as injection;
 
 part 'signin_event.dart';
@@ -33,6 +34,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
     on<SelectImageFromLibraryClicked>(_selectFromLibrary);
     on<TakeImageWithCameraClicked>(_takeFromCamera);
     on<ChangePictureClicked>(_changePicture);
+    on<ConfirmButtonClicked>(_confirmReviewProfile);
   }
 
   void _typingStarted(TypingStarted event, Emitter<SignInState> emit) {
@@ -89,59 +91,31 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
         .call(CreateUserParams(event.email, event.password));
 
     if (createUserResponse.isSuccess) {
-      state.removeError(SignInStateError.unattendedError);
-      state.removeError(SignInStateError.emailAlreadyInUse);
-      state.removeError(SignInStateError.invalidEmail);
-      state.removeError(SignInStateError.weakPassword);
-      state.removeError(SignInStateError.operationNotAllowed);
+      state.removeAllErrors();
       emit(state.copyWith(
           signInStateStatus: SignInStateStatus.userSuccessfullyCreated));
     } else {
       switch (createUserResponse.responseError) {
         case CreateUserResponseError.none:
-          state.hasError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.weakPassword);
-          state.removeError(SignInStateError.operationNotAllowed);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+          state.onlyError(SignInStateError.unattendedError);
           break;
         case CreateUserResponseError.emailAlreadyInUse:
-          state.hasError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.weakPassword);
-          state.removeError(SignInStateError.operationNotAllowed);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+          state.onlyError(SignInStateError.emailAlreadyInUse);
+          break;
         case CreateUserResponseError.invalidEmail:
-          state.hasError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.weakPassword);
-          state.removeError(SignInStateError.operationNotAllowed);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+          state.onlyError(SignInStateError.invalidEmail);
+          break;
         case CreateUserResponseError.weakPassword:
-          state.hasError(SignInStateError.weakPassword);
-          state.removeError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.operationNotAllowed);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+          state.onlyError(SignInStateError.weakPassword);
+          break;
         case CreateUserResponseError.operationNotAllowed:
-          state.hasError(SignInStateError.operationNotAllowed);
-          state.removeError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.weakPassword);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+          state.onlyError(SignInStateError.operationNotAllowed);
+          break;
         default:
-          state.removeError(SignInStateError.unattendedError);
-          state.removeError(SignInStateError.emailAlreadyInUse);
-          state.removeError(SignInStateError.invalidEmail);
-          state.removeError(SignInStateError.weakPassword);
-          state.removeError(SignInStateError.operationNotAllowed);
-          emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
+          state.onlyError(SignInStateError.unknown);
+          break;
       }
+      emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
     }
   }
 
@@ -196,5 +170,35 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
 
   void _changePicture(ChangePictureClicked event, Emitter<SignInState> emit){
     emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
+  }
+
+  void _confirmReviewProfile(ConfirmButtonClicked event, Emitter<SignInState> emit) async{
+    UpdateUserResponse response = await injection.sl<UpdateUser>().call(UpdateUserParams(event.firstName, event.lastName, event.birthDate, event.pictureFile));
+
+   if(response.isSuccess){
+      state.removeAllErrors();
+      emit(state.copyWith(signInStateStatus: SignInStateStatus.userSuccessfullyUpdated));
+   }
+   else{
+    switch (response.responseError){
+      case UpdateUserResponseError.none:
+        state.onlyError(SignInStateError.unattendedError);
+        break;
+      case UpdateUserResponseError.notLogedIn:
+        state.onlyError(SignInStateError.notLogedIn);
+        break;
+      case UpdateUserResponseError.retryLimitExceeded:
+        state.onlyError(SignInStateError.retryLimitExceeded);
+        break;
+      case UpdateUserResponseError.unauthorized:
+        state.onlyError(SignInStateError.unauthorized);
+        break;
+      case UpdateUserResponseError.unknown:
+      default:
+        state.onlyError(SignInStateError.unknown);
+        break;
+    }
+    emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
+   } 
   }
 }

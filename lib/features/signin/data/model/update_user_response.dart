@@ -1,4 +1,4 @@
-enum UpdateUserResponseError{none,notLogedIn}
+enum UpdateUserResponseError{none,unknown,notLogedIn,unauthorized,retryLimitExceeded}
 
 class UpdateUserResponse{
   bool isSuccess;
