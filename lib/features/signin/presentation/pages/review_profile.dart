@@ -108,6 +108,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
                 ),
                 InputTextField(
                   "Your date of birth",
+                  readOnly: true,
                   controller: birthDateController,
                   onChanged: () {},
                   initialValue: DateFormat.dasheMMddyyyy(state.birthDate),
