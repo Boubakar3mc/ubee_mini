@@ -4,6 +4,7 @@ import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/route/route.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
+import 'package:ubee_mini/core/utils/date_format.dart';
 import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
@@ -28,6 +29,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: const ProgressAppBar(
             currentPart: 4,
             noArrow: true,
@@ -71,9 +73,9 @@ class _ReviewProfileState extends State<ReviewProfile> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
-                InputTextField("Your first name", controller: firstNameController, onChanged: (){}),
-                InputTextField("Your last name", controller: lastNameController, onChanged: (){}),
-                InputTextField("Your date of birth", controller: birthDateController, onChanged: (){}),
+                InputTextField("Your first name", controller: firstNameController, onChanged: (){},initialValue: state.firstName,),
+                InputTextField("Your last name", controller: lastNameController, onChanged: (){},initialValue: state.lastName,),
+                InputTextField("Your date of birth", controller: birthDateController, onChanged: (){},initialValue: DateFormat.dasheMMddyyyy(state.birthDate),),
                 const Spacer(),
                 const Text('Your profile details can be changed at anytime,',style: TextStyle(color: themeDarkColor,fontSize: 16,fontWeight: FontWeight.w600)),
                 const Text('*except for your full name and date of birth*.',style: TextStyle(color: Colors.red,fontSize: 16,fontWeight: FontWeight.w600)),

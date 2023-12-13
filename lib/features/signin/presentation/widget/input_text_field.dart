@@ -17,6 +17,7 @@ class InputTextField extends StatefulWidget {
   final String errorMessage;
   final Function() ?onTap;
   final bool readOnly;
+  final String initialValue;
 
   const InputTextField(this.labelText,
       {required this.controller,
@@ -27,6 +28,7 @@ class InputTextField extends StatefulWidget {
       this.errorMessage="",
       this.onTap,
       this.readOnly=false,
+      this.initialValue = "",
       super.key});
 
 
@@ -40,9 +42,7 @@ class _InputTextFieldState extends State<InputTextField> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() {
-      
-    });
+    widget.controller.text = widget.initialValue;
   }
 
   @override
