@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ubee_mini/core/components/progress_app_bar.dart';
 import 'package:ubee_mini/core/components/top_page_title.dart';
+import 'package:ubee_mini/core/route/route.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
@@ -55,7 +56,9 @@ class _ReviewProfileState extends State<ReviewProfile> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600)),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.read<SigninBloc>().add(ChangePictureClicked());
+                                  Navigator.pushNamed(context, addPicturePage);},
                                 child: const Text("Change picture",
                                     style: TextStyle(
                                         color: themeLightBlueColor,
