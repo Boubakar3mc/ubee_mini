@@ -10,7 +10,6 @@ import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/red_error_message.dart';
-import 'package:ubee_mini/injection_container.dart' as injection;
 
 class SetupProfileView extends StatefulWidget {
   const SetupProfileView({super.key});
@@ -30,130 +29,127 @@ class _SetupProfileViewState extends State<SetupProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => injection.sl<SigninBloc>(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: ProgressAppBar(
-          onArrowPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        body: BlocConsumer<SigninBloc, SignInState>(
-          listener: (context, state) {
-            if (state.signInStateStatus ==
-                SignInStateStatus.namesBirthdateSetted) {
-              Navigator.pushNamed(context, addPicturePage);
-            }
-          },
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TopPageTitle(title: localized(context).setupYourProfile),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: SizedBox(
-                      width: 325,
-                      child: Text(
-                        localized(context).informationProvidedDisplay,
-                        style: const TextStyle(
-                            color: themeDarkColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      )),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: ProgressAppBar(
+        onArrowPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: BlocConsumer<SigninBloc, SignInState>(
+        listener: (context, state) {
+          if (state.signInStateStatus ==
+              SignInStateStatus.namesBirthdateSetted) {
+            Navigator.pushNamed(context, addPicturePage);
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TopPageTitle(title: localized(context).setupYourProfile),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: SizedBox(
+                    width: 325,
+                    child: Text(
+                      localized(context).informationProvidedDisplay,
+                      style: const TextStyle(
+                          color: themeDarkColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.center,
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: InputTextField(
+                  localized(context).yourFirstName,
+                  controller: firstNameController,
+                  onChanged: () {},
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: InputTextField(
-                    localized(context).yourFirstName,
-                    controller: firstNameController,
-                    onChanged: () {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: InputTextField(localized(context).yourLastName,
-                      controller: lastNameController, onChanged: () {}),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InputTextField(localized(context).yourBirthDate, readOnly: true,
-                    onTap: () {
-                  showDatePicker(
-                          context: context,
-                          initialDate: birthDate ?? DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now())
-                      .then((value) => {
-                            if (value != null)
-                              {
-                                birthDate = value,
-                              },
-                            context
-                                .read<SigninBloc>()
-                                .add(BirthdateChanged(birthDate!)),
-                            birthDateController.text = birthDate != null
-                                ? DateFormat.dasheMMddyyyy(birthDate!)
-                                : "",
-                          });
-                },
-                    errorMessage: _getBirthDateErrorMessage(state),
-                    controller: birthDateController,
-                    onChanged: () {}),
-                const SizedBox(
-                  height: 100,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: conditionChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          conditionChecked = value;
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: InputTextField(localized(context).yourLastName,
+                    controller: lastNameController, onChanged: () {}),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              InputTextField(localized(context).yourBirthDate, readOnly: true,
+                  onTap: () {
+                showDatePicker(
+                        context: context,
+                        initialDate: birthDate ?? DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now())
+                    .then((value) => {
+                          if (value != null)
+                            {
+                              birthDate = value,
+                            },
+                          context
+                              .read<SigninBloc>()
+                              .add(BirthdateChanged(birthDate!)),
+                          birthDateController.text = birthDate != null
+                              ? DateFormat.dasheMMddyyyy(birthDate!)
+                              : "",
                         });
-                      },
-                      activeColor: const Color.fromARGB(255, 78, 145, 255),
-                    ),
-                    Flexible(
-                        child: SizedBox(
-                            width: 214,
-                            child: Text(
-                              localized(context).disclaimer,
-                              style: const TextStyle(
-                                  color: themeDarkColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
-                            ))),
-                  ],
-                ),
-                const Spacer(),
-                if (state.hasError(SignInStateError.notLogedIn)) ...{
-                  RedErrorMessage(localized(context).notLogedIn),
-                },
-                DarkButton(
-                  localized(context).continueButton,
-                  onPressed: !state.hasErrors() && _allFieldFilled()
-                      ? () {
-                          context.read<SigninBloc>().add(
-                              ContinueSetupProfileClicked(
-                                  firstNameController.text,
-                                  lastNameController.text,
-                                  birthDate!));
-                        }
-                      : null,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-              ],
-            );
-          },
-        ),
+              },
+                  errorMessage: _getBirthDateErrorMessage(state),
+                  controller: birthDateController,
+                  onChanged: () {}),
+              const SizedBox(
+                height: 100,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: conditionChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        conditionChecked = value;
+                      });
+                    },
+                    activeColor: const Color.fromARGB(255, 78, 145, 255),
+                  ),
+                  Flexible(
+                      child: SizedBox(
+                          width: 214,
+                          child: Text(
+                            localized(context).disclaimer,
+                            style: const TextStyle(
+                                color: themeDarkColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ))),
+                ],
+              ),
+              const Spacer(),
+              if (state.hasError(SignInStateError.notLogedIn)) ...{
+                RedErrorMessage(localized(context).notLogedIn),
+              },
+              DarkButton(
+                localized(context).continueButton,
+                onPressed: !state.hasErrors() && _allFieldFilled()
+                    ? () {
+                        context.read<SigninBloc>().add(
+                            ContinueSetupProfileClicked(
+                                firstNameController.text,
+                                lastNameController.text,
+                                birthDate!));
+                      }
+                    : null,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

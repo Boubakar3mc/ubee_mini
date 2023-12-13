@@ -61,3 +61,4 @@ final class PictureSelected extends SigninEvent{
 }
 
 final class ChangePictureClicked extends SigninEvent{}
+

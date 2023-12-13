@@ -5,8 +5,14 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int totalPart;
   final int currentPart;
   final Function? onArrowPressed;
+  final bool noArrow;
 
-  const ProgressAppBar({this.totalPart=5,this.currentPart=0,this.onArrowPressed,super.key});
+  const ProgressAppBar(
+      {this.totalPart = 5,
+      this.currentPart = 0,
+      this.onArrowPressed,
+      this.noArrow = false,
+      super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(80);
@@ -19,25 +25,21 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 20,
         ),
         AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  if(onArrowPressed!=null) onArrowPressed?.call();
-                },
-                icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
+            leading: _getArrow(),
             title: Row(
-              children: getProgressBar(currentPart),
+              children: _getProgressBar(currentPart),
             )),
       ],
     );
   }
 
-  List<Widget> getProgressBar(int current) {
+  List<Widget> _getProgressBar(int current) {
     List<Widget> widgetList = [];
 
     for (int i = 0; i < totalPart; i++) {
-      Color partColor = Color.fromARGB(255, 217, 217, 217);
+      Color partColor = const Color.fromARGB(255, 217, 217, 217);
       if (i == current) {
-        partColor = Color.fromARGB(255, 147, 147, 147);
+        partColor = const Color.fromARGB(255, 147, 147, 147);
       }
       widgetList.add(Container(
         width: 51,
@@ -47,5 +49,19 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     return widgetList;
+  }
+
+  Widget? _getArrow() {
+    return Visibility(
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      visible: noArrow?false:true,
+      child: IconButton(
+          onPressed: () {
+            if (onArrowPressed != null) onArrowPressed?.call();
+          },
+          icon: const Icon(Icons.arrow_back, color: themeBlueColor)),
+    );
   }
 }

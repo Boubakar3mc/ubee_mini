@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ubee_mini/core/utils/colors_constants.dart';
 
 class SmallBorderButton extends StatelessWidget {
   final Color color;

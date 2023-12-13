@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ubee_mini/features/signin/presentation/pages/add_picture_view.dart';
 import 'package:ubee_mini/features/signin/presentation/pages/create_account_view.dart';
+import 'package:ubee_mini/features/signin/presentation/pages/review_profile.dart';
 import 'package:ubee_mini/features/signin/presentation/pages/setup_profile_view.dart';
 import 'package:ubee_mini/features/signin/presentation/pages/welcom_to_ubee_view.dart';
 
@@ -11,6 +12,7 @@ const String authPage = 'auth';
 const String welcomePage = 'welcome';
 const String setupProfilePage = 'setupProfile';
 const String addPicturePage = "addPicture";
+const String reviewProfilePage = "reviewProfile";
 
 
 // Control our page route flow
@@ -24,6 +26,8 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const SetupProfileView());
     case addPicturePage:
       return MaterialPageRoute(builder: (context) => const AddPictureView());
+    case reviewProfilePage:
+      return MaterialPageRoute(builder: (context) => const ReviewProfile());
     default:
       return MaterialPageRoute(builder: (context) => Container());
   }
