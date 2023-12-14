@@ -42,6 +42,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
     return BlocConsumer<SigninBloc, SignInState>(
       listener: (context, state) {
         if(state.signInStateStatus == SignInStateStatus.userSuccessfullyUpdated){
+          context.read<SigninBloc>().add(ChangingPage());
           Navigator.pushNamed(context, userSuccessfullyCreated);
         }
       },

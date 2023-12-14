@@ -21,6 +21,10 @@ final class EmailTypingStopped extends SigninEvent{
   const EmailTypingStopped(this.email);
 }
 
+final class ChangingPage extends SigninEvent{
+  
+}
+
 final class PasswordTypingStopped extends SigninEvent {
   final String password;
   final String confirmationPassword;

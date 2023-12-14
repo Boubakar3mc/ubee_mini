@@ -30,6 +30,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
         body: BlocConsumer<SigninBloc, SignInState>(
           listener: (context, state) {
             if (state.signInStateStatus == SignInStateStatus.userSuccessfullyCreated) {
+              context.read<SigninBloc>().add(ChangingPage());
               Navigator.pushNamed(context, route.welcomePage);
             }
           },

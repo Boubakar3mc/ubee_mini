@@ -138,6 +138,7 @@ class _AddPictureViewState extends State<AddPictureView> {
                       text: localized(context).continueButton,
                       color: themeDarkColor,
                       onPressed: () {
+                        context.read<SigninBloc>().add(ChangingPage());
                         Navigator.pushNamed(context, reviewProfilePage);
                       },
                     ),

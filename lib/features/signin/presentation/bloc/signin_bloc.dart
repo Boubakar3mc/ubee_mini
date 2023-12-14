@@ -20,6 +20,7 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
   final imagePicker = ImagePicker();
   SigninBloc() : super(SignInState.initial()) {
     on<SigninEvent>((event, emit) {});
+    on<ChangingPage>(_changePage);
 
     on<TypingStarted>(_typingStarted);
     on<TypingEnded>(_typingEnded);
@@ -35,6 +36,10 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
     on<TakeImageWithCameraClicked>(_takeFromCamera);
     on<ChangePictureClicked>(_changePicture);
     on<ConfirmButtonClicked>(_confirmReviewProfile);
+  }
+
+  void _changePage(ChangingPage event, Emitter<SignInState> emit){
+    emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
   }
 
   void _typingStarted(TypingStarted event, Emitter<SignInState> emit) {

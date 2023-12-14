@@ -40,6 +40,7 @@ class _SetupProfileViewState extends State<SetupProfileView> {
         listener: (context, state) {
           if (state.signInStateStatus ==
               SignInStateStatus.namesBirthdateSetted) {
+            context.read<SigninBloc>().add(ChangingPage());
             Navigator.pushNamed(context, addPicturePage);
           }
         },
