@@ -47,8 +47,14 @@
     "goToCameraButton" : "Go to camera",
     "lookingGreat" : "Looking great!",
     "changePicutreButton" : "Change picture",
-    "continueButton" : "Continue"
+    "continueButton" : "Continue",
 
-
+    "reviewProfile" : "Review your profile",
+    "firstName" : "Your first name",
+    "lastName" : "Your last name",
+    "birthday" : "Your date of birth",
+    "profileDetailsCanBeChanged" : "Your profile details can be changed at anytime,",
+    "except" : "*except for your full name and date of birth*.",
+    "confirmButton" : "Confirm"
 
 }

@@ -7,6 +7,7 @@ import 'package:ubee_mini/core/components/top_page_title.dart';
 import 'package:ubee_mini/core/route/route.dart';
 import 'package:ubee_mini/core/utils/colors_constants.dart';
 import 'package:ubee_mini/core/utils/date_format.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/dark_button.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
@@ -57,7 +58,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const TopPageTitle(title: "Review your profile"),
+                TopPageTitle(title: localized(context).reviewProfile),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.054,
                 ),
@@ -84,8 +85,8 @@ class _ReviewProfileState extends State<ReviewProfile> {
                                       .add(ChangePictureClicked());
                                   Navigator.pushNamed(context, addPicturePage);
                                 },
-                                child: const Text("Change picture",
-                                    style: TextStyle(
+                                child: Text(localized(context).changePicutreButton,
+                                    style:const TextStyle(
                                         color: themeLightBlueColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600))),
@@ -99,19 +100,19 @@ class _ReviewProfileState extends State<ReviewProfile> {
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 InputTextField(
-                  "Your first name",
+                  localized(context).firstName,
                   controller: firstNameController,
                   onChanged: () {},
                   initialValue: state.firstName,
                 ),
                 InputTextField(
-                  "Your last name",
+                  localized(context).lastName,
                   controller: lastNameController,
                   onChanged: () {},
                   initialValue: state.lastName,
                 ),
                 InputTextField(
-                  "Your date of birth",
+                  localized(context).birthday,
                   readOnly: true,
                   controller: birthDateController,
                   onChanged: () {},
@@ -136,20 +137,20 @@ class _ReviewProfileState extends State<ReviewProfile> {
                   errorMessage: _getBirthDateErrorMessage(state),
                 ),
                 const Spacer(),
-                const Text('Your profile details can be changed at anytime,',
-                    style: TextStyle(
+                Text(localized(context).profileDetailsCanBeChanged,
+                    style:const TextStyle(
                         color: themeDarkColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600)),
-                const Text('*except for your full name and date of birth*.',
-                    style: TextStyle(
+                Text(localized(context).except,
+                    style:const TextStyle(
                         color: Colors.red,
                         fontSize: 16,
                         fontWeight: FontWeight.w600)),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.08,
                 ),
-                DarkButton("Confirm",
+                DarkButton(localized(context).confirmButton,
                     onPressed:
                         _allFieldFilled()&&!state.hasErrors()&&loadedTimeElapsed?(){
                           context.read<SigninBloc>().add(ConfirmButtonClicked(firstNameController.text, lastNameController.text, birthDate, state.selectedImage));
