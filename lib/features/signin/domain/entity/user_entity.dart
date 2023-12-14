@@ -8,7 +8,7 @@ class User extends Equatable{
   final DateTime birthDate;
   final File picture;
 
-  User({required this.firstName,required this.lastName, required this.birthDate, required this.picture});
+  const User({required this.firstName,required this.lastName, required this.birthDate, required this.picture});
   
   @override
   List<Object?> get props => [firstName,lastName,birthDate];
