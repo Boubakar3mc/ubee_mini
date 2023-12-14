@@ -50,12 +50,12 @@ class SigninBloc extends Bloc<SigninEvent, SignInState> {
     bool isValidEmail = await injection
         .sl<EmailValidation>()
         .call(EmailValidationParams(event.email));
-
     if (!isValidEmail) {
       state.addError(SignInStateError.invalidEmail);
       emit(state.copyWith(signInStateStatus: SignInStateStatus.error));
     } else {
       state.removeError(SignInStateError.invalidEmail);
+      state.removeError(SignInStateError.emailAlreadyInUse);
       if (!state.hasErrors()) {
         emit(state.copyWith(signInStateStatus: SignInStateStatus.initial));
       }
