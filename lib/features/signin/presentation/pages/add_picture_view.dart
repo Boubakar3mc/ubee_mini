@@ -9,14 +9,9 @@ import 'package:ubee_mini/features/signin/presentation/bloc/signin_bloc.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/expandable_card.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/small_border_button.dart';
 
-class AddPictureView extends StatefulWidget {
+class AddPictureView extends StatelessWidget {
   const AddPictureView({super.key});
 
-  @override
-  State<AddPictureView> createState() => _AddPictureViewState();
-}
-
-class _AddPictureViewState extends State<AddPictureView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SigninBloc, SignInState>(

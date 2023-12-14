@@ -8,17 +8,14 @@ import 'package:ubee_mini/features/signin/presentation/widget/red_error_message.
 import 'package:ubee_mini/features/signin/presentation/widget/input_text_field.dart';
 import 'package:ubee_mini/core/route/route.dart' as route;
 
-class CreateAccountView extends StatefulWidget {
-  const CreateAccountView({super.key});
+class CreateAccountView extends StatelessWidget {
+  CreateAccountView({super.key});
 
-  @override
-  State<CreateAccountView> createState() => _CreateAccountViewState();
-}
+  final TextEditingController emailTextFieldController = TextEditingController();
 
-class _CreateAccountViewState extends State<CreateAccountView> {
-  TextEditingController emailTextFieldController = TextEditingController();
-  TextEditingController passwordTextFieldController = TextEditingController();
-  TextEditingController passwordConfirmTextFieldController =
+  final TextEditingController passwordTextFieldController = TextEditingController();
+
+  final TextEditingController passwordConfirmTextFieldController =
       TextEditingController();
 
   @override

@@ -6,14 +6,9 @@ import 'package:ubee_mini/core/utils/localized.dart';
 import 'package:ubee_mini/features/signin/presentation/widget/rectangular_button.dart';
 import 'package:ubee_mini/core/route/route.dart' as route;
 
-class WelcomeToUbeeView extends StatefulWidget {
+class WelcomeToUbeeView extends StatelessWidget {
   const WelcomeToUbeeView({super.key});
 
-  @override
-  State<WelcomeToUbeeView> createState() => _WelcomeToUbeeViewState();
-}
-
-class _WelcomeToUbeeViewState extends State<WelcomeToUbeeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

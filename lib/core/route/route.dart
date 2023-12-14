@@ -21,7 +21,7 @@ const String userSuccessfullyCreated = "userCreated";
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
     case authPage:
-      return MaterialPageRoute(builder: (context) => const CreateAccountView());
+      return MaterialPageRoute(builder: (context) => CreateAccountView());
     case welcomePage:
       return MaterialPageRoute(builder: (context) => const WelcomeToUbeeView());
     case setupProfilePage:
