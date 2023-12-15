@@ -47,6 +47,26 @@ class _ReviewProfileState extends State<ReviewProfile> {
           context.read<SigninBloc>().add(ChangingPage());
           Navigator.pushNamed(context, userSuccessfullyCreated);
         }
+        if (state.signInStateStatus == SignInStateStatus.error){
+          String errorMessage = "";
+          switch(state.errors[0]){
+            case SignInStateError.notLogedIn:
+              errorMessage = localized(context).notLoggedInError;
+              break;
+            case SignInStateError.unauthorized:
+              errorMessage = localized(context).unauthorizedError;
+              break;
+            case SignInStateError.retryLimitExceeded:
+              errorMessage = localized(context).retryLimitExceededError;
+            case SignInStateError.unknown:
+            default:
+              errorMessage = localized(context).unknownError;
+               break;
+          }
+
+          final snackBar = SnackBar(content: Text(errorMessage),action: SnackBarAction(label: 'OK',onPressed: (){},),);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       },
       builder: (context, state) {
         birthDate = state.birthDate;

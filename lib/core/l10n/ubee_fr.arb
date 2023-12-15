@@ -54,5 +54,9 @@
     "birthday" : "Votre date de naissance",
     "profileDetailsCanBeChanged" : "Les détails de votre profil peuvent être modifiés à tout moment,",
     "except" : "*à l'exception de votre nom complet et de votre date de naissance*.",
-    "confirmButton" : "Confirmer"
+    "confirmButton" : "Confirmer",
+    "notLoggedInError" : "Vous n'êtes pas connecté",
+    "unauthorizedError" : "Vous n'êtes pas autorisé à le faire",
+    "retryLimitExceededError" : "Limite de réessais dépassée",
+    "unknownError" : "Erreur inconnue"
 }

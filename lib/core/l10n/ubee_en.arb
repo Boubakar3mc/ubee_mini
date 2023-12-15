@@ -55,6 +55,10 @@
     "birthday" : "Your date of birth",
     "profileDetailsCanBeChanged" : "Your profile details can be changed at anytime,",
     "except" : "*except for your full name and date of birth*.",
-    "confirmButton" : "Confirm"
+    "confirmButton" : "Confirm",
+    "notLoggedInError" : "You are not logged in",
+    "unauthorizedError" : "You are not authorized to do this",
+    "retryLimitExceededError" : "Retry limit exceeded",
+    "unknownError" : "Unknown error"
 
 }
