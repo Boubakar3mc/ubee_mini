@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:localizely_sdk/localizely_sdk.dart';
+import 'package:ubee_mini/core/utils/localized.dart';
 
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
   await di.init();
-  runApp(const MyApp());
+  runApp(const LocalizelyInContextEditing(
+    enabled: true,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -26,6 +33,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('en', ''),
         Locale('fr', ''),
+        Locale('es', ''),
       ],
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -61,8 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              localized(context).appName,
             ),
             Text(
               '$_counter',

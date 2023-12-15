@@ -20,12 +20,17 @@ dependencies:
   firebase_storage: ^11.5.2
   intl: any
   get_it: ^7.6.4
+  localizely_sdk: ^2.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+flutter_intl:
+  localizely:
+    ota_enabled: true
 
 flutter:
   generate: true
