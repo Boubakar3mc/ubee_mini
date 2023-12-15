@@ -25,9 +25,10 @@ class _ReviewProfileState extends State<ReviewProfile> {
   TextEditingController birthDateController = TextEditingController();
 
   DateTime birthDate = DateTime.now();
-  bool loadedTimeElapsed = false; //Timer to wait for textfields initial value to be loaded
+  bool loadedTimeElapsed =
+      false; //Timer to wait for textfields initial value to be loaded
 
-   @override
+  @override
   initState() {
     super.initState();
     Timer(
@@ -41,7 +42,8 @@ class _ReviewProfileState extends State<ReviewProfile> {
   Widget build(BuildContext context) {
     return BlocConsumer<SigninBloc, SignInState>(
       listener: (context, state) {
-        if(state.signInStateStatus == SignInStateStatus.userSuccessfullyUpdated){
+        if (state.signInStateStatus ==
+            SignInStateStatus.userSuccessfullyUpdated) {
           context.read<SigninBloc>().add(ChangingPage());
           Navigator.pushNamed(context, userSuccessfullyCreated);
         }
@@ -86,8 +88,9 @@ class _ReviewProfileState extends State<ReviewProfile> {
                                       .add(ChangePictureClicked());
                                   Navigator.pushNamed(context, addPicturePage);
                                 },
-                                child: Text(localized(context).changePicutreButton,
-                                    style:const TextStyle(
+                                child: Text(
+                                    localized(context).changePicutreButton,
+                                    style: const TextStyle(
                                         color: themeLightBlueColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600))),
@@ -97,9 +100,10 @@ class _ReviewProfileState extends State<ReviewProfile> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
+                ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.05,
+                        minHeight: MediaQuery.of(context).size.height * 0.03)),
                 InputTextField(
                   localized(context).firstName,
                   controller: firstNameController,
@@ -121,7 +125,7 @@ class _ReviewProfileState extends State<ReviewProfile> {
                   onTap: () {
                     showDatePicker(
                             context: context,
-                            initialDate: birthDate ,
+                            initialDate: birthDate,
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now())
                         .then((value) => {
@@ -132,30 +136,41 @@ class _ReviewProfileState extends State<ReviewProfile> {
                               context
                                   .read<SigninBloc>()
                                   .add(BirthdateChanged(birthDate)),
-                              birthDateController.text = DateFormat.dasheMMddyyyy(birthDate),
+                              birthDateController.text =
+                                  DateFormat.dasheMMddyyyy(birthDate),
                             });
                   },
                   errorMessage: _getBirthDateErrorMessage(state),
                 ),
-                const Spacer(),
+                ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height * 0.08,
+                        maxHeight: MediaQuery.of(context).size.height * 0.10)),
                 Text(localized(context).profileDetailsCanBeChanged,
-                    style:const TextStyle(
+                    style: const TextStyle(
                         color: themeDarkColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600)),
                 Text(localized(context).except,
-                    style:const TextStyle(
+                    style: const TextStyle(
                         color: Colors.red,
                         fontSize: 16,
                         fontWeight: FontWeight.w600)),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.08,
+                const Spacer(),
+                DarkButton(
+                  localized(context).confirmButton,
+                  onPressed: _allFieldFilled() &&
+                          !state.hasErrors() &&
+                          loadedTimeElapsed
+                      ? () {
+                          context.read<SigninBloc>().add(ConfirmButtonClicked(
+                              firstNameController.text,
+                              lastNameController.text,
+                              birthDate,
+                              state.selectedImage));
+                        }
+                      : null,
                 ),
-                DarkButton(localized(context).confirmButton,
-                    onPressed:
-                        _allFieldFilled()&&!state.hasErrors()&&loadedTimeElapsed?(){
-                          context.read<SigninBloc>().add(ConfirmButtonClicked(firstNameController.text, lastNameController.text, birthDate, state.selectedImage));
-                        }:null,),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.08,
                 )
