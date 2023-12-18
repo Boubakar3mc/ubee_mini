@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => di.sl<SigninBloc>(),
       child: MaterialApp(
-        initialRoute: route.authPage,
+        initialRoute: route.createAccount,
         onGenerateRoute: route.controller,
         title: 'Flutter Demo',
         theme: ThemeData(

@@ -9,7 +9,7 @@ import 'package:ubee_mini/features/signin/presentation/pages/welcom_to_ubee_view
 // Route Names
 
 // Auth
-const String authPage = 'auth';
+const String createAccount = 'createAccount';
 const String welcomePage = 'welcome';
 const String setupProfilePage = 'setupProfile';
 const String addPicturePage = "addPicture";
@@ -20,7 +20,7 @@ const String userSuccessfullyCreated = "userCreated";
 // Control our page route flow
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
-    case authPage:
+    case createAccount:
       return MaterialPageRoute(builder: (context) => CreateAccountView());
     case welcomePage:
       return MaterialPageRoute(builder: (context) => const WelcomeToUbeeView());
