@@ -1,3 +1,62 @@
 {
-    "appName": "Ubee"
+    "appName": "Ubee",
+
+    "createAnAccount" : "Creation d'un compte",
+    "enterEmailAdress" : "Entre ton adresse courriel",
+    "emailHint" : "Courriel",
+    "createPassword" : "Crée un mot de passe",
+    "passwordHint" : "Mot de passe",
+    "confirmPassword" : "Confirm le mot de passe",
+    "confPasswordHint" : "Confirm le mot de passe",
+    "createAccountButton" : "Créer le compte",
+
+    "unattendedError" : "Erreure inattendu",
+    "operationNotAllowed" : "Operation non permise",
+
+    "invalidEmailErrorMesage" : "Adresse courriel non valide",
+    "emailAlreadyInUseErrorMessage" : "Courriel déjà utilisé",
+
+    "badPasswordErrorMessage" : "Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
+    "weakPasswordErrorMessage" : "Mot de pass faible Le mot de passe doit avoir:\n Au moins 8 caractères \n Au moins 1 majuscule\n Au moins une minuscule \n Au moins un chiffre \n Au moins un caractère spécial(!@#$&*~%)",
+
+    "passwordNotMatchingErrorMessage" : "Le mot de passe ne correspond pas",
+
+    "welcomeToUBEE" : "Bienvenu chez UBEE",
+    "accountSuccessfullyCreated" : "Votre compte a été créé avec succès.",
+    "intendToUseUBEE" : "Comment comptez-vous utiliser l'UBEE ?",
+    "iNeedHelpButton" : "J'ai besoin d'aide",
+    "iWantWorkButton" : "Je veux travailler",
+
+    "setupYourProfile" : "Créer votre profil",
+    "informationProvidedDisplay" : "Les informations que vous avez fournies seront affichées sur votre page de profil.",
+    "yourFirstName" : "Quel est votre prénom ?",
+    "yourLastName" : "Quel est votre nom de famille ?",
+    "yourBirthDate" : "Quelle est votre date de naissance ?",
+    "disclaimer" : "Je comprends que j'agirai en tant que contractant individuel au sein de l'organisation d'UBEE.",
+    "notLogedIn" : "Vous n'êtes pas authentifié",
+    "continueButton" : "Continuer",
+
+    "addProfilePicture" : "Ajouter une photo de profil",
+    "showProfessionalLook" : "Mettez en valeur votre aspect professionnel et augmentez vos chances d'être embauché.",
+    "picGuidelines" : "Guide photo",
+    "bestSmile" : "Affichez votre plus beau sourire",
+    "centerYourself" : "Se centrer dans le cadre, à partir des épaules.",
+    "makeFaceVisible" : "Veillez à ce que votre visage soit visible, bien éclairé et mis au point.",
+    "selectFromLibraryButton" : "Sélectionner dans la bibliothèque",
+    "goToCameraButton" : "Aller à la caméra",
+    "lookingGreat" : "C'est très bien !",
+    "changePicutreButton" : "Changer la photo",
+    "continueButton" : "Continuer",
+
+    "reviewProfile" : "Réviser votre profil",
+    "firstName" : "Votre prénom",
+    "lastName" : "Votre nom",
+    "birthday" : "Votre date de naissance",
+    "profileDetailsCanBeChanged" : "Les détails de votre profil peuvent être modifiés à tout moment,",
+    "except" : "*à l'exception de votre nom complet et de votre date de naissance*.",
+    "confirmButton" : "Confirmer",
+    "notLoggedInError" : "Vous n'êtes pas connecté",
+    "unauthorizedError" : "Vous n'êtes pas autorisé à le faire",
+    "retryLimitExceededError" : "Limite de réessais dépassée",
+    "unknownError" : "Erreur inconnue"
 }

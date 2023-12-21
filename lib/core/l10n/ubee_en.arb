@@ -1,3 +1,64 @@
 {
-    "appName": "Ubee"
+    "appName": "Ubee",
+
+    "createAnAccount" : "Create an account",
+    "enterEmailAdress" : "Enter your email address",
+    "emailHint" : "Email",
+    "createPassword" : "Create a password",
+    "passwordHint" : "Password",
+    "confirmPassword" : "Confirm password",
+    "confPasswordHint" : "Confirm password",
+    "createAccountButton" : "Create account",
+
+    "unattendedError" : "Unattended error",
+    "operationNotAllowed" : "Operation not allowed",
+
+    "invalidEmailErrorMesage" : "Invalid email adress",
+    "emailAlreadyInUseErrorMessage" : "Email already in use",
+
+    "badPasswordErrorMessage" : "The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
+    "weakPasswordErrorMessage" : "Weak password. The password must have:\n At least 8 characters \n At least 1 UpperCase character\n At least 1 LowerCase character \n At least 1 number \n At least one Special Char(!@#$&*~%)",
+
+    "passwordNotMatchingErrorMessage" : "Password doesn't match",
+
+    
+    "welcomeToUBEE" : "Welcome to UBEE",
+    "accountSuccessfullyCreated" : "Your account was successfully created.",
+    "intendToUseUBEE" : "How do you intend to use UBEE?",
+    "iNeedHelpButton" : "I need help",
+    "iWantWorkButton" : "I want to work",
+
+    "setupYourProfile" : "Setup your profile",
+    "informationProvidedDisplay" : "The information you provided will displayed on your profile page.",
+    "yourFirstName" : "What's your first name?",
+    "yourLastName" : "What's your last name?",
+    "yourBirthDate" : "What's your date of birth",
+    "disclaimer" : "I understand that I will be acting as an individual contractor within the UBEE organization.",
+    "notLogedIn" : "Not loged in",
+    "continueButton" : "Continue",
+
+    "addProfilePicture" : "Add a profile picture",
+    "showProfessionalLook" : "Show-off your professional look and improve your chances of getting hired.",
+    "picGuidelines" : "Picture guidelines",
+    "bestSmile" : "Show your best smile",
+    "centerYourself" : "Center yourself in frame, from the shoulders up.",
+    "makeFaceVisible" : "Make sure your face is visible, well lit and in focus.",
+    "selectFromLibraryButton" : "Select from library",
+    "goToCameraButton" : "Go to camera",
+    "lookingGreat" : "Looking great!",
+    "changePicutreButton" : "Change picture",
+    "continueButton" : "Continue",
+
+    "reviewProfile" : "Review your profile",
+    "firstName" : "Your first name",
+    "lastName" : "Your last name",
+    "birthday" : "Your date of birth",
+    "profileDetailsCanBeChanged" : "Your profile details can be changed at anytime,",
+    "except" : "*except for your full name and date of birth*.",
+    "confirmButton" : "Confirm",
+    "notLoggedInError" : "You are not logged in",
+    "unauthorizedError" : "You are not authorized to do this",
+    "retryLimitExceededError" : "Retry limit exceeded",
+    "unknownError" : "Unknown error"
+
 }
